@@ -1,0 +1,94 @@
+
+{
+  "response": {
+  "version":"0.1",
+  "termsofService":"http://www.wunderground.com/weather/api/d/terms.html",
+  "features": {
+  "conditions": 1
+  }
+	}
+  ,	"current_observation": {
+		"image": {
+		"url":"http://icons.wxug.com/graphics/wu2/logo_130x80.png",
+		"title":"Weather Underground",
+		"link":"http://www.wunderground.com"
+		},
+		"display_location": {
+		"full":"Kota Sukabumi, Indonesia",
+		"city":"Kota Sukabumi",
+		"state":"",
+		"state_name":"Indonesia",
+		"country":"ID",
+		"country_iso3166":"ID",
+		"zip":"00000",
+		"magic":"5",
+		"wmo":"96751",
+		"latitude":"-6.91666698",
+		"longitude":"106.92722321",
+		"elevation":"617.00000000"
+		},
+		"observation_location": {
+		"full":"Halim Perdanakus, ",
+		"city":"Halim Perdanakus",
+		"state":"",
+		"country":"ID",
+		"country_iso3166":"ID",
+		"latitude":"-6.26660824",
+		"longitude":"106.89111328",
+		"elevation":"85 ft"
+		},
+		"estimated": {
+		},
+		"station_id":"WIHH",
+		"observation_time":"Last Updated on Desember 19, 6:00 PM WIB",
+		"observation_time_rfc822":"Fri, 19 Dec 2014 18:00:00 +0700",
+		"observation_epoch":"1418986800",
+		"local_time_rfc822":"Fri, 19 Dec 2014 18:49:40 +0700",
+		"local_epoch":"1418989780",
+		"local_tz_short":"WIB",
+		"local_tz_long":"Asia/Jakarta",
+		"local_tz_offset":"+0700",
+		"weather":"Pandangan Kabur",
+		"temperature_string":"84 F (29 C)",
+		"temp_f":84,
+		"temp_c":29,
+		"relative_humidity":"70%",
+		"wind_string":"From the West at 9 MPH",
+		"wind_dir":"West",
+		"wind_degrees":270,
+		"wind_mph":9,
+		"wind_gust_mph":0,
+		"wind_kph":15,
+		"wind_gust_kph":0,
+		"pressure_mb":"1010",
+		"pressure_in":"29.83",
+		"pressure_trend":"+",
+		"dewpoint_string":"73 F (23 C)",
+		"dewpoint_f":73,
+		"dewpoint_c":23,
+		"heat_index_string":"91 F (33 C)",
+		"heat_index_f":91,
+		"heat_index_c":33,
+		"windchill_string":"NA",
+		"windchill_f":"NA",
+		"windchill_c":"NA",
+		"feelslike_string":"91 F (33 C)",
+		"feelslike_f":"91",
+		"feelslike_c":"33",
+		"visibility_mi":"3.1",
+		"visibility_km":"5.0",
+		"solarradiation":"--",
+		"UV":"0","precip_1hr_string":"-9999.00 in (-9999.00 mm)",
+		"precip_1hr_in":"-9999.00",
+		"precip_1hr_metric":"--",
+		"precip_today_string":"0.00 in (0.0 mm)",
+		"precip_today_in":"0.00",
+		"precip_today_metric":"0.0",
+		"icon":"hazy",
+		"icon_url":"http://icons.wxug.com/i/c/k/nt_hazy.gif",
+		"forecast_url":"http://www.wunderground.com/global/stations/96751.html",
+		"history_url":"http://www.wunderground.com/history/airport/WIHH/2014/12/19/DailyHistory.html",
+		"ob_url":"http://www.wunderground.com/cgi-bin/findweather/getForecast?query=-6.26660824,106.89111328",
+		"nowcast":""
+	}
+}

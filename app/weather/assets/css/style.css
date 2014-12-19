@@ -1,0 +1,55 @@
+body
+{
+	font-family: Tahoma;
+	color:#555
+}
+div.icon-weather
+{
+	font-size:18px;
+	width:150px;
+	min-height:100px;
+	padding:25px 0
+}
+div.icon-weather span
+{
+}
+div.icon-weather span.forecast-name
+{
+	font-size: 70%;
+}
+div.icon-weather span.forecast-temp
+{
+	font-size: 250%;
+}
+div.icon-weather span.forecast-temp .wi-celsius
+{
+	font-size: 60%;
+	vertical-align:middle;
+}
+div.heading-weather span
+{
+	display:block;
+	text-align:center;
+}
+div.heading-weather .forecast-city
+{
+	font-size:20px
+}
+div.body-weather
+{
+	display:block;
+}
+div.body-weather span[class*=forecast-]
+{
+}
+div.body-weather span.forecast-icon
+{
+	font-size:200%;
+	width:50%;
+	text-align:center;
+}
+div.body-weather span.forecast-temp
+{
+	width:50%;
+	text-align:left;
+}

@@ -1,0 +1,58 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Sukabumi",
+               "short_name" : "Sukabumi",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Sukabumi",
+               "short_name" : "Sukabumi",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "West Java",
+               "short_name" : "West Java",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Indonesia",
+               "short_name" : "ID",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Sukabumi, Sukabumi, West Java, Indonesia",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : -6.892335999999999,
+                  "lng" : 106.9602349
+               },
+               "southwest" : {
+                  "lat" : -6.979086,
+                  "lng" : 106.8712988
+               }
+            },
+            "location" : {
+               "lat" : -6.919600000000001,
+               "lng" : 106.9272
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -6.892335999999999,
+                  "lng" : 106.9602349
+               },
+               "southwest" : {
+                  "lat" : -6.979086,
+                  "lng" : 106.8712988
+               }
+            }
+         },
+         "types" : [ "locality", "political" ]
+      }
+   ],
+   "status" : "OK"
+}

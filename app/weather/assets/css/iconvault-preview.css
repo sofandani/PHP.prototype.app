@@ -1,0 +1,92 @@
+/*
+ * Created with iconvau.lt
+ */
+
+@font-face {
+  font-family: "iconvault";
+  src: url("../font/iconvault_forecastfont.eot");
+  src: url("../font/iconvault_forecastfont.eot?#iefix") format("embedded-opentype"),
+       url("../font/iconvault_forecastfont.woff") format("woff"),
+       url("../font/iconvault_forecastfont.ttf") format("truetype"),
+       url("../font/iconvault_forecastfont.svg#iconvault") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.forecast-font:before {
+  font-family: "iconvault";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  text-decoration: inherit;
+}
+
+/* -----Moon----- */
+
+  .icon-moon::after {
+  content: "\f10d";
+  color:rgb(255, 165, 0);
+  position: absolute;
+  }
+
+/* -----Night----- */
+
+  .icon-night::after {
+  content: "\f100";
+  position:absolute;
+  color:rgb(255, 165, 0);
+  }
+
+
+/* -----Sun----- */
+
+  .icon-sun::after {
+  content: "\f113";
+  color:rgb(255, 165, 0);
+  position: absolute;
+  }
+
+/* -----Cloud----- */
+
+  .icon-cloud::after {
+  content: "\f106";
+  color:rgb(204, 204, 204);
+  position: absolute;
+  }
+
+.icon-sunny:before { content: "\f101"; }
+.icon-frosty:before,
+.icon-chancesnow:before { content: "\f102"; }
+.icon-windysnow:before { content: "\f103"; }
+.icon-showers:before { content: "\f104"; }
+.icon-basecloud:before { content: "\f105"; }
+.icon-cloud:before,
+.icon-cloudy:before,
+.icon-fog:before,
+.icon-hazy:before { content: "\f106"; }
+.icon-rainy:before,
+.icon-rain:before,
+.icon-chancerain:before { content: "\f107"; }
+.icon-mist:before { content: "\f108"; }
+.icon-windysnowcloud:before { content: "\f109"; }
+.icon-drizzle:before { content: "\f10a"; }
+.icon-snowy:before,
+.icon-flurries:before,
+.icon-chanceflurries:before { content: "\f10b"; }
+.icon-sleet:before { content: "\f10c"; }
+.icon-moon:before { content: "\f10d"; }
+.icon-windyrain:before { content: "\f10e"; }
+.icon-hail:before,
+.icon-chancesleet:before { content: "\f10f"; }
+.icon-sunset:before { content: "\f110"; }
+.icon-windyraincloud:before { content: "\f111"; }
+.icon-sunrise:before { content: "\f112"; }
+.icon-sun:before,
+.icon-clear:before { content: "\f113"; }
+.icon-thunder:before,
+.icon-chancetstorms:before { content: "\f114"; }
+.icon-windy:before { content: "\f115"; }

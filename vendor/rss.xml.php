@@ -1,0 +1,237 @@
+<?php
+
+/**
+ * RSS for PHP - small and easy-to-use library for consuming an RSS Feed
+ * Adding default URL/Server for data request from http://news.google.com
+ *
+ * @author David Grudl
+ * @author Change httpRequest to _RetriveXML using cURLs class (dir="vendor/curl.php")
+ * @copyright Copyright (c) 2008 - 2014 David Grudl & Ofan Ebob
+ * @license New BSD License
+ * @version 1.1
+ */
+class NewsGoogleFeed
+{
+	/** @var int */
+	public static $cacheExpire = 86400; // 1 day
+
+	/** @var string */
+	public static $cacheDir = 'xml';
+
+	/** @var SimpleXMLElement */
+	protected $xml;
+
+
+	/**
+	 * Loads RSS channel.
+	 * @param  string  RSS feed URL
+	 * @param  string  optional user name
+	 * @param  string  optional password
+	 * @return Feed
+	 * @throws NewsGoogleFeedException
+	 */
+	public static function loadRss($query)
+	{
+		$xml = new SimpleXMLElement(self::_RetriveXML($query), LIBXML_NOWARNING | LIBXML_NOERROR);
+		
+		if(!$xml->channel)
+		{
+			throw new NewsGoogleFeedException('Invalid channel.');
+		}
+
+		self::adjustNamespaces($xml->channel);
+
+		foreach ($xml->channel->item as $item)
+		{
+			// converts namespaces to dotted tags
+			self::adjustNamespaces($item);
+
+			// generate 'timestamp' tag
+			if(isset($item->{'dc:date'}))
+			{
+				$item->timestamp = strtotime($item->{'dc:date'});
+			}
+			elseif(isset($item->pubDate))
+			{
+				$item->timestamp = strtotime($item->pubDate);
+			}
+		}
+
+		$feed = new self;
+		$feed->xml = $xml->channel;
+		return $feed;
+	}
+
+
+	/**
+	 * Loads Atom channel.
+	 * @param  string  Atom feed URL
+	 * @param  string  optional user name
+	 * @param  string  optional password
+	 * @return Feed
+	 * @throws NewsGoogleFeedException
+	 */
+	public static function loadAtom($query)
+	{
+		$xml = new SimpleXMLElement(self::_RetriveXML($query), LIBXML_NOWARNING | LIBXML_NOERROR);
+		if(!in_array('http://www.w3.org/2005/Atom', $xml->getDocNamespaces(), TRUE))
+		{
+			throw new NewsGoogleFeedException('Invalid channel.');
+		}
+
+		// generate 'timestamp' tag
+		foreach ($xml->entry as $entry)
+		{
+			$entry->timestamp = strtotime($entry->updated);
+		}
+
+		$feed = new self;
+		$feed->xml = $xml;
+		return $feed;
+	}
+
+
+	/**
+	 * Returns property value. Do not call directly.
+	 * @param  string  tag name
+	 * @return SimpleXMLElement
+	 */
+	public function __get($name)
+	{
+		return $this->xml->{$name};
+	}
+
+
+	/**
+	 * Sets value of a property. Do not call directly.
+	 * @param  string  property name
+	 * @param  mixed   property value
+	 * @return void
+	 */
+	public function __set($name, $value)
+	{
+		throw new Exception("Cannot assign to a read-only property '$name'.");
+	}
+
+
+	/**
+	 * Retrive XML.
+	 * @param  string query
+	 * @return string
+	 * @throws NewsGoogleFeedException
+	 */
+	private static function _RetriveXML($query)
+	{
+		$CacheXML = self::_CacheXML($query);
+
+		if($CacheXML == null)
+		{
+			throw new NewsGoogleFeedException('Can\'t request data.');
+		}
+		else
+		{
+			return $CacheXML;
+		}
+	}
+
+
+	/**
+	 * Cache data XML
+	 * @param  string query
+	 * @return string
+	 * @throws NewsGoogleFeedException
+	 */
+	private static function _CacheXML($query)
+	{
+		$stored =  BASEDIR.'/'.self::$cacheDir . '/feed.' . md5($query) . '.xml';
+
+		$expire_cache = strtotime('+1 Day');
+
+		// Hapus cache jika melampaui batas expire
+		if( file_exists($stored) AND ( filemtime($stored) < strtotime('now') ) )
+		{
+			unlink($stored);
+		}
+
+		// Buat file cache baru jika file tidak ditemukan di direktori
+		if( !file_exists($stored) )
+		{
+			// Menggunakan _RequestData() untuk mengambil data API
+			$rd = self::_RequestData($query);
+
+			// Jika hasil data API false maka di return null
+			if($rd == false)
+			{
+				$data = null;
+			}
+			else
+			{
+				// Buat file cache & rubah meta time nya
+				@file_put_contents($stored, $rd);
+				touch($stored, $expire_cache);
+
+				// Definisikan nilai $data
+				$data = $rd;
+			}
+		}
+		else
+		{
+			// Nilai data dari lokal file cache
+			$data = @file_get_contents($stored);
+		}
+
+		return $data;
+	}
+
+
+	/**
+	 * Request Data with cURLs method
+	 * @param  string query
+	 * @return string
+	 * @throws NewsGoogleFeedException
+	 */
+	private static function _RequestData($query)
+	{
+		if(method_exists('cURLs','access_curl'))
+		{
+			$server = 'http://news.google.com/news/section';
+			$query = urlencode($query);
+			$BuildURI = $server.'?q='.$query.'&output=rss';
+
+			$data = array('url'=>$BuildURI,'type'=>'data');
+			$cURLs = new cURLs($data);
+			return $cURLs->access_curl();
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+
+	/**
+	 * Generates better accessible namespaced tags.
+	 * @param  SimpleXMLElement
+	 * @return void
+	 */
+	private static function adjustNamespaces($el)
+	{
+		foreach ($el->getNamespaces(TRUE) as $prefix => $ns)
+		{
+			$children = $el->children($ns);
+			foreach ($children as $tag => $content)
+			{
+				$el->{$prefix . ':' . $tag} = $content;
+			}
+		}
+	}
+
+}
+
+
+
+/**
+ * An exception generated by Feed.
+ */
+class NewsGoogleFeedException extends Exception{}
+?>

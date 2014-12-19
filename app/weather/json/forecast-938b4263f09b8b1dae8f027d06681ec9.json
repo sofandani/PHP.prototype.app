@@ -1,0 +1,96 @@
+
+{
+  "response": {
+  "version":"0.1",
+  "termsofService":"http://www.wunderground.com/weather/api/d/terms.html",
+  "features": {
+  "conditions": 1
+  }
+	}
+  ,	"current_observation": {
+		"image": {
+		"url":"http://icons.wxug.com/graphics/wu2/logo_130x80.png",
+		"title":"Weather Underground",
+		"link":"http://www.wunderground.com"
+		},
+		"display_location": {
+		"full":"Kota Bandung, Indonesia",
+		"city":"Kota Bandung",
+		"state":"",
+		"state_name":"Indonesia",
+		"country":"ID",
+		"country_iso3166":"ID",
+		"zip":"00000",
+		"magic":"1",
+		"wmo":"96783",
+		"latitude":"-6.88000011",
+		"longitude":"107.59999847",
+		"elevation":"791.00000000"
+		},
+		"observation_location": {
+		"full":", ",
+		"city":"",
+		"state":"",
+		"country":"",
+		"country_iso3166":"ID",
+		"latitude":"",
+		"longitude":"",
+		"elevation":" ft"
+		},
+		"estimated": {
+		"estimated": 1,
+		"description": "These are estimated conditions. There are no weather stations nearby."
+		},
+		"station_id":"",
+		"observation_time":"Last Updated on , ",
+		"observation_time_rfc822":"",
+		"observation_epoch":"",
+		"local_time_rfc822":"Fri, 19 Dec 2014 18:48:06 +0700",
+		"local_epoch":"1418989686",
+		"local_tz_short":"WIB",
+		"local_tz_long":"Asia/Jakarta",
+		"local_tz_offset":"+0700",
+		"weather":"Badai Petir",
+		"temperature_string":"72 F (22 C)",
+		"temp_f":72,
+		"temp_c":22,
+		"relative_humidity":"94%",
+		"wind_string":"From the West at 3 MPH",
+		"wind_dir":"West",
+		"wind_degrees":217,
+		"wind_mph":3,
+		"wind_gust_mph":0,
+		"wind_kph":5,
+		"wind_gust_kph":0,
+		"pressure_mb":"",
+		"pressure_in":"",
+		"pressure_trend":"",
+		"dewpoint_string":"70 F (21 C)",
+		"dewpoint_f":70,
+		"dewpoint_c":21,
+		"heat_index_string":"NA",
+		"heat_index_f":"NA",
+		"heat_index_c":"NA",
+		"windchill_string":"NA",
+		"windchill_f":"NA",
+		"windchill_c":"NA",
+		"feelslike_string":"72 F (22 C)",
+		"feelslike_f":"72",
+		"feelslike_c":"22",
+		"visibility_mi":"",
+		"visibility_km":"",
+		"solarradiation":"--",
+		"UV":"--","precip_1hr_string":" in ( mm)",
+		"precip_1hr_in":"",
+		"precip_1hr_metric":"--",
+		"precip_today_string":" in ( mm)",
+		"precip_today_in":"",
+		"precip_today_metric":"--",
+		"icon":"tstorms",
+		"icon_url":"http://icons.wxug.com/i/c/k/nt_tstorms.gif",
+		"forecast_url":"http://www.wunderground.com/global/stations/96783.html",
+		"history_url":"http://www.wunderground.com/history/airport/////DailyHistory.html",
+		"ob_url":"http://www.wunderground.com/cgi-bin/findweather/getForecast?query=,",
+		"nowcast":""
+	}
+}

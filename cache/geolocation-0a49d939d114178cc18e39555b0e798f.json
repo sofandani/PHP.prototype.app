@@ -1,0 +1,63 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Kuningan",
+               "short_name" : "Kuningan",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Kuningan",
+               "short_name" : "Kuningan",
+               "types" : [ "administrative_area_level_3", "political" ]
+            },
+            {
+               "long_name" : "Kuningan",
+               "short_name" : "Kuningan",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "West Java",
+               "short_name" : "West Java",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Indonesia",
+               "short_name" : "ID",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Kuningan, Kuningan, Kuningan, West Java, Indonesia",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : -6.943256,
+                  "lng" : 108.52196
+               },
+               "southwest" : {
+                  "lat" : -7.01537,
+                  "lng" : 108.464925
+               }
+            },
+            "location" : {
+               "lat" : -6.981010299999999,
+               "lng" : 108.4928912
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -6.943256,
+                  "lng" : 108.52196
+               },
+               "southwest" : {
+                  "lat" : -7.01537,
+                  "lng" : 108.464925
+               }
+            }
+         },
+         "types" : [ "locality", "political" ]
+      }
+   ],
+   "status" : "OK"
+}
