@@ -9,7 +9,6 @@ Eksperimen aplikasi web menggunakan PHP bentuk contoh/protoype<br />
 - Panoramio (with Panoramio API)
 - Foursquare (with Foursquare API)
 - Google Maps (with Google Maps API)
-- Waze (with Waze API)
 - <strike>Waze (with Waze API)</strike>
 <br />
 
