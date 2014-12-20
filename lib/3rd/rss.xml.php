@@ -4,7 +4,7 @@
  * Adding default URL/Server for data request from http://news.google.com
  *
  * @author David Grudl
- * @author Change httpRequest to _RetriveXML using cURLs class (dir="vendor/curl.php")
+ * @author Change httpRequest to _RetrieveXML using cURLs class (dir="vendor/curl.php")
  * @copyright Copyright (c) 2008 - 2014 David Grudl & Ofan Ebob
  * @license New BSD License
  * @version 1.1
@@ -31,7 +31,7 @@ class NewsGoogleFeed
 	 */
 	public static function loadRss($query)
 	{
-		$xml = new SimpleXMLElement(self::_RetriveXML($query), LIBXML_NOWARNING | LIBXML_NOERROR);
+		$xml = new SimpleXMLElement(self::_RetrieveXML($query), LIBXML_NOWARNING | LIBXML_NOERROR);
 		
 		if(!$xml->channel)
 		{
@@ -72,7 +72,7 @@ class NewsGoogleFeed
 	 */
 	public static function loadAtom($query)
 	{
-		$xml = new SimpleXMLElement(self::_RetriveXML($query), LIBXML_NOWARNING | LIBXML_NOERROR);
+		$xml = new SimpleXMLElement(self::_RetrieveXML($query), LIBXML_NOWARNING | LIBXML_NOERROR);
 		if(!in_array('http://www.w3.org/2005/Atom', $xml->getDocNamespaces(), TRUE))
 		{
 			throw new NewsGoogleFeedException('Invalid channel.');
@@ -119,7 +119,7 @@ class NewsGoogleFeed
 	 * @return string
 	 * @throws NewsGoogleFeedException
 	 */
-	private static function _RetriveXML($query)
+	private static function _RetrieveXML($query)
 	{
 		$CacheXML = self::_CacheXML($query);
 
