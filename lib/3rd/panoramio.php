@@ -1,4 +1,4 @@
-<?php
+<?php if ( !defined('BASEPATH')) header('Location:404');
 /**
  * Simple class for retreiving images from the Panoramio API
  * 

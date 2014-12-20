@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEDIR')) header('Location:404');
+<?php if ( !defined('BASEPATH')) header('Location:404');
 /**
  * Class Crud_Service
  *
@@ -13,7 +13,6 @@
  * @copyright 2014
  *
  */
-
 class Crud_Service {
 	/**
      * @since v.1.0

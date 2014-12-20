@@ -1,5 +1,4 @@
-<?php
-
+<?php if ( !defined('BASEPATH')) header('Location:404');
 /**
  * cURLs CLASS
  * Handling request data from external url/site domain

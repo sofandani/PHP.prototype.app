@@ -1,6 +1,4 @@
 <?php
-/* Clear header send output */
-ob_start("ob_gzhandler");
 proto_html_compression_start();
 ?>
 <!DOCTYPE html>
@@ -15,6 +13,3 @@ proto_html_compression_start();
 	</head>
 	<body><?= isset($content) ? $content : '' ?></body>
 </html>
-<?php
-ob_end_flush();
-?>

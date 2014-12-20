@@ -1,4 +1,4 @@
-<?php
+<?php if ( !defined('BASEPATH')) header('Location:404');
 /**
  * Converts a Array into stdObject.
  * @return array

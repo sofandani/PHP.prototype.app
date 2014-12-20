@@ -1,0 +1,42 @@
+Options All -Indexes
+
+<Files "config.php">
+Order Deny,Allow
+Deny from all
+</Files>
+
+<Files "loader.php">
+Order Deny,Allow
+Deny from all
+</Files>
+
+<Files "metadata.json">
+Order Deny,Allow
+Deny from all
+</Files>
+
+<Files  ~ "\.(json|xml)$">
+Order Deny,Allow
+Deny from all
+#Remove this comment and clear # bellow on Allow from if online server
+#Allow from 192.168.1.5
+</Files>
+
+<IfModule mod_rewrite.c>
+
+RewriteEngine On
+
+RewriteRule /?\.htaccess$ - [F,L]
+RewriteRule ^/?trash/log\.txt$ - [F,L]
+
+RewriteBase /PHP.prototype.app/
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /PHP.prototype.app/index.php [L]
+
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?192.168.1.5/PHP.prototype.app/.*$ [NC]
+RewriteRule \.(png|jpg|gif|js|css|json|xml)$ _ [NC,R,L]
+
+</IfModule>

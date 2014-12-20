@@ -1,4 +1,11 @@
-<?php
+<?php if ( !defined('BASEPATH')) header('Location:404');
+/**
+ * GoogleGeocode Class
+ * Geocode converter from city Name via google maps geocode
+ * @author Ofan Ebob
+ * @since 2014 (v.1)
+ * @copyright GNU & GPL license
+ */
 class GoogleGeocode
 {
 	protected $_args;

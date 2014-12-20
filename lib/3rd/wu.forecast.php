@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEDIR')) header('Location:404');
+<?php if ( !defined('BASEPATH')) header('Location:404');
 /**
  * WuForecast Class
  * Weather & Forecast using API Wunderground Service

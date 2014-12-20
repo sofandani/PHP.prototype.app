@@ -1,4 +1,4 @@
-<?php
+<?php if ( !defined('BASEPATH')) header('Location:404');
 
 function convert_color_temp($temp)
 {

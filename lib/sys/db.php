@@ -1,5 +1,4 @@
-<?php if ( ! defined('BASEDIR')) header('Location:404');
-
+<?php if ( !defined('BASEPATH')) header('Location:404');
 /**
  * @author ofanebob
  * @copyright 2014
@@ -7,7 +6,6 @@
  * Dirubah menjadi method OOP mysqli
  * Berlaku untuk semua versi PHP kecuali di atas 5.4.9 Depreceted
  */
-
 class DB_Class {
     protected $_connecting;
     protected $_hosting;

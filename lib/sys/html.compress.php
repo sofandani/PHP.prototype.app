@@ -1,4 +1,11 @@
-<?php if ( ! defined('BASEDIR')) header('Location:page=error&msg=404');
+<?php if ( !defined('BASEPATH')) header('Location:404');
+/**
+ * Proto_HTML_Compression Class
+ * Unwrapper HTML output
+ * @author Ofan Ebob
+ * @since 2014 (v.1)
+ * @copyright GNU & GPL license
+ */
 class Proto_HTML_Compression
 {
 	// Settings

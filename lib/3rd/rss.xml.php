@@ -1,5 +1,4 @@
-<?php
-
+<?php if ( !defined('BASEPATH')) header('Location:404');
 /**
  * RSS for PHP - small and easy-to-use library for consuming an RSS Feed
  * Adding default URL/Server for data request from http://news.google.com

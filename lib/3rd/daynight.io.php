@@ -1,4 +1,4 @@
-<?php
+<?php if ( !defined('BASEPATH')) header('Location:404');
 
 function is_night_day_bool($time='')
 {

@@ -1,7 +1,7 @@
 <?php
 function var_weather_title($city)
 {
-	return 'Wunderground '.ucwords($city);
+	return 'Weather '.ucwords($city);
 }
 
 function var_weather_content($var)
@@ -25,11 +25,11 @@ function var_weather_content($var)
 
 function var_weather_embed()
 {
-	$r = '
-	<link media="all" rel="stylesheet" href="assets/css/style.css">
-	<link rel="stylesheet" href="assets/css/weather-icons.css">
-	';
-	return $r;
+	return GenTag::css(
+				array('style'=>array('href'=>'style.css'),
+					  'font'=>array('href'=>'weather-icons.css')
+				)
+			);
 }
 
 $title = var_weather_title($city);

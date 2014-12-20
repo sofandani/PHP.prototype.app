@@ -8,7 +8,8 @@
 		"crud",
 		"curl",
 		"readfile",
-		"html.compress"
+		"html.compress",
+		"html.generator"
 	],
 	"setup":
 	{
@@ -18,6 +19,10 @@
 			"username":"root",
 			"password":"",
 			"table":""
+		},
+		"host":
+		{
+			"prefix":"http://192.168.1.5"
 		}
 	}
 }
