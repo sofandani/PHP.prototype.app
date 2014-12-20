@@ -55,7 +55,7 @@ class GoogleGeocode
 
 			if( !file_exists($stored) )
 			{
-				$rc = $this->_RetriveGeocode();
+				$rc = $this->_RetrieveGeocode();
 
 				if($rc == false)
 				{
@@ -85,7 +85,7 @@ class GoogleGeocode
 		}
 	}
 
-	protected function _RetriveGeocode()
+	protected function _RetrieveGeocode()
 	{
 		$argums = $this->_args;
 		if($argums == null)
