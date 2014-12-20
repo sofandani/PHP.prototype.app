@@ -17,6 +17,6 @@ $libs = array(	'array.convert',
 				'rss.xml'
 			);
 
-return loader($libs);
+return loader_3rd($libs);
 
 ?>

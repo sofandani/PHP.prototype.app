@@ -2,9 +2,7 @@
 
 require_once(dirname(__FILE__).'/loader.php');
 
-$data_vendor = array('DirectoryLister/DirectoryLister');
-
-loader($data_vendor);
+require_once(dirname(__FILE__).'/lib/DirectoryLister/DirectoryLister.php');
 
 // Initialize the DirectoryLister object
 $lister = new DirectoryLister();

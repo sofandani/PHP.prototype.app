@@ -19,6 +19,5 @@ $libs = array(	'array.convert',
 				'daynight.io'
 			);
 
-return loader($libs);
-
+return loader_3rd($libs);
 ?>

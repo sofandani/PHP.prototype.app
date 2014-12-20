@@ -1,5 +1,4 @@
 <?php
-
 require(dirname(__FILE__).'/lib.php');
 
 $city = isset($_GET['city']) ? $_GET['city'] : null;
@@ -20,7 +19,7 @@ try
 	$panoramioClass = new panoramioAPI($ApiParm);
 	$PanoramioImages = $panoramioClass->getPanoramioImages();
 
-	include(BASEDIR.'/template/html.php');
+	include(BASEDIR.'/var/panoramio.php');
 }
 catch(PanoramioException $e)
 {

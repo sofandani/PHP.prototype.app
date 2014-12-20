@@ -14,10 +14,11 @@ require_once(BASEDIR.'/../../loader.php');
 
 $libs = array(	'array.convert',
 				'curl',
-				'geocode',
-				'panoramio'
+				'wu.forecast',
+				'color.temp',
+				'daynight.io'
 			);
 
-return loader_3rd($libs);
+return loader($libs);
 
 ?>

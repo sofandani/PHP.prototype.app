@@ -1,0 +1,23 @@
+{
+	"info":"Lib Meta Data",
+	"version":"2.0",
+	"require":
+	[
+		"db",
+		"array.convert",
+		"crud",
+		"curl",
+		"readfile",
+		"html.compress"
+	],
+	"setup":
+	{
+		"db":
+		{
+			"server":"localhost",
+			"username":"root",
+			"password":"",
+			"table":""
+		}
+	}
+}

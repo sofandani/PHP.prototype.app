@@ -66,11 +66,6 @@ class GoogleGeocode
 						@file_put_contents($stored, $rc);
 						touch($stored, $cache_expire);
 
-						if(function_exists('ArrayToObject') == false)
-						{
-							require_once(dirname(__FILE__).'/array.convert.php');
-						}
-
 						return json_decode($rc);
 					}
 				}

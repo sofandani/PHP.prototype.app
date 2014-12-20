@@ -1,6 +1,4 @@
 <?php
-date_default_timezone_set("Asia/Jakarta");
-
 require_once dirname(__FILE__).'/lib.php';
 
 $city = isset($_GET['city']) ? $_GET['city'] : null;
@@ -37,7 +35,8 @@ try
 
 	$suffix_icon_weather = is_night_day_bool() == 0 ? 'nt_' : '';
 
-	include(BASEDIR.'/template/html.php');
+	include(BASEDIR.'/var/weather.php');
+	include(TEMPLATEHTML);
 }
 catch(WuForecastException $e)
 {
