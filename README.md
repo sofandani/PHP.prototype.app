@@ -18,4 +18,4 @@ Eksperimen aplikasi web menggunakan PHP bentuk contoh/protoype<br />
 - Beberapa vendor premium dibuat random API key untuk mengatasi limit request
 <br />
 
-Silahkan gunakan clone git untuk mendapatkan code, atau ikut kontribusi dengan kolaborasi sebagai kontributor.
+Silahkan gunakan clone git untuk mendapatkan code, atau ikut kolaborasi sebagai kontributor.
