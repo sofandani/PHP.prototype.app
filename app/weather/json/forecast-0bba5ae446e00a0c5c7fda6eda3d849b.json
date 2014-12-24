@@ -1,0 +1,33 @@
+
+{
+  "response": {
+  "version":"0.1",
+  "termsofService":"http://www.wunderground.com/weather/api/d/terms.html",
+  "features": {
+  "conditions": 1
+  }
+		, "results": [
+		{
+		"name": "Kairo",
+		"city": "Kairo",
+		"state": "",
+		"country": "EG",
+		"country_iso3166":"EG",
+		"country_name":"Mesir",
+		"zmw": "00000.1.62366",
+		"l": "/q/zmw:00000.1.62366"
+		}
+		,
+		{
+		"name": "Kairo",
+		"city": "Kairo",
+		"state": "",
+		"country": "EG",
+		"country_iso3166":"EG",
+		"country_name":"Mesir",
+		"zmw": "00000.1.62373",
+		"l": "/q/zmw:00000.1.62373"
+		}
+		]
+	}
+}

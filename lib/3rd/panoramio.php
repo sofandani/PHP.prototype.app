@@ -1,4 +1,4 @@
-<?php if ( !defined('BASEPATH')) header('Location:404');
+<?php if ( !defined('BASEPATH')) header('Location:/404');
 /**
  * Simple class for retreiving images from the Panoramio API
  * 
@@ -42,9 +42,8 @@
 	protected $_cache_dir;
 
 
-	public function __construct($args=false)
+	public function __construct()
 	{
-		$this->_args = is_array($args) ? $args : null;
 
  		$this->_calculateBox = isset($args['calc_box']) ? $args['calc_box'] : true;
  		$this->_panoramioImageNumber = isset($args['img_num']) ? $args['img_num'] : 20;
@@ -57,8 +56,8 @@
 		try
 		{
 			$city = isset($args['city']) ? $args['city'] : 'Kuningan, Jawa Barat';
-			$GoogleGeocode = new GoogleGeocode(array('city'=>$city,'typedata'=>'json'));
-			$get_geocode = $GoogleGeocode->get_geocode();
+			$GoogleGeocode = new GoogleGeocode();
+			$get_geocode = $GoogleGeocode->get_geocode(array('city'=>$city,'typedata'=>'json'));
 
 			$this->_requiredLatitude = $get_geocode->results[0]->geometry->location->lat;
 			$this->_requiredLongitude = $get_geocode->results[0]->geometry->location->lng;
@@ -152,23 +151,45 @@
 	 * @param int $imageNumber
 	 * @return object 
 	 */	
-	 public function getPanoramioImages()
+	 public function getPanoramioImages($args=false)
 	 {
+		$this->_args = is_array($args) ? $args : null;
+
 	 	$calculateBox = $this->_calculateBox;
 		if($calculateBox)
 		{
 			$this->_calculateBoundingBox();
 		}
 
-		$apiResponse = $this->_CacheAPI();
+		try
+		{
+			$cache_dir = isset($args['cache_dir']) ? $args['cache_dir'] : $this->_cache_dir;
+			
+			$city = isset($args['city']) ? $args['city'] : 'Kuningan';
+
+			$basedir = defined('BASEDIR') ? BASEDIR : dirname(__FILE__).'/../app/panoramio/json';
+
+			$expire_cache = isset($args['expire_cache']) ? $args['expire_cache'] : strtotime('+1 Hour');
+
+			// Cache Handler
+			$data = CacheHandler::save(array('method'=>array('GoogleGeocode','_processRequest'),
+											 'data'=>array('typedata'=>$typedata,'city'=>$city),
+											 'cache_expire'=>$expire_cache,
+											 'cache_prefix'=>'geolocation',
+											 'cache_id'=>$city,
+											 'cache_dir'=>$cache_dir,
+											 'type_save'=>$type_save,
+											 'cache_table'=>$cache_table,
+											 'serialize'=>$serialize
+											 )
+										);
+
+			return json_decode($data);
 		
-		if( $apiResponse == null )
-		{
-			throw new PanoramioException('Failed Request API');
 		}
-		else
+		catch(CacheHandlerException $e)
 		{
-			return json_decode($apiResponse);
+			throw new PanoramioException($e->getMessage());
 		}
 	 }
 
@@ -185,7 +206,7 @@
 		$cache_dir = isset($data['cache_dir']) ? $data['cache_dir'] : $this->_cache_dir;
 		$city = isset($data['city']) ? $data['city'] : 'Kuningan';
 
-		$basedir = defined('BASEDIR') ? BASEDIR : dirname(__FILE__).'/../app/panoramio/location';
+		$basedir = defined('BASEDIR') ? BASEDIR : dirname(__FILE__).'/../app/panoramio/json';
 
 		$stored = $basedir.'/'.$cache_dir.'/panoramio-'.md5($city).'.json';
 		$expire_cache = isset($data['expire_cache']) ? $data['expire_cache'] : strtotime('+1 Hour');
@@ -285,7 +306,7 @@
 	  * @param string $apiData
 	  * @return array $apiResponse
 	  */
-	 protected function _processRequest()
+	 public function _processRequest()
 	 {
 	 	if(method_exists('cURLs','access_curl'))
 	 	{

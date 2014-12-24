@@ -1,4 +1,4 @@
-<?php if ( !defined('BASEPATH')) header('Location:404');
+<?php if ( !defined('BASEPATH')) header('Location:/404');
 /**
  * GenTag Class
  * HTML tag generatpr for meta,link stylesheet & script

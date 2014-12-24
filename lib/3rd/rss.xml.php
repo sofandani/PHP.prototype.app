@@ -1,4 +1,4 @@
-<?php if ( !defined('BASEPATH')) header('Location:404');
+<?php if ( !defined('BASEPATH')) header('Location:/404');
 /**
  * RSS for PHP - small and easy-to-use library for consuming an RSS Feed
  * Adding default URL/Server for data request from http://news.google.com
@@ -14,12 +14,32 @@ class NewsGoogleFeed
 	/** @var int */
 	public static $cacheExpire = 86400; // 1 day
 
-	/** @var string */
-	public static $cacheDir = 'xml';
-
 	/** @var SimpleXMLElement */
 	protected $xml;
 
+
+	/**
+	 * Returns property value. Do not call directly.
+	 * @param  string  tag name
+	 * @return SimpleXMLElement
+	 */
+	public function __get($name)
+	{
+		return $this->xml->{$name};
+	}
+
+
+	/**
+	 * Sets value of a property. Do not call directly.
+	 * @param  string  property name
+	 * @param  mixed   property value
+	 * @return void
+	 */
+	public function __set($name, $value)
+	{
+		throw new NewsGoogleFeedException("Cannot assign to a read-only property '$name'.");
+	}
+	
 
 	/**
 	 * Loads RSS channel.
@@ -91,29 +111,6 @@ class NewsGoogleFeed
 
 
 	/**
-	 * Returns property value. Do not call directly.
-	 * @param  string  tag name
-	 * @return SimpleXMLElement
-	 */
-	public function __get($name)
-	{
-		return $this->xml->{$name};
-	}
-
-
-	/**
-	 * Sets value of a property. Do not call directly.
-	 * @param  string  property name
-	 * @param  mixed   property value
-	 * @return void
-	 */
-	public function __set($name, $value)
-	{
-		throw new Exception("Cannot assign to a read-only property '$name'.");
-	}
-
-
-	/**
 	 * Retrive XML.
 	 * @param  string query
 	 * @return string
@@ -121,65 +118,33 @@ class NewsGoogleFeed
 	 */
 	private static function _RetrieveXML($query)
 	{
-		$CacheXML = self::_CacheXML($query);
-
-		if($CacheXML == null)
+		try
 		{
-			throw new NewsGoogleFeedException('Can\'t request data.');
+			$basePath = (defined('BASEPATH') ? BASEPATH : dirname(__FILE__).'/../../');
+			
+			$cache_dir = $basePath.'/app/news/xml';
+
+			$expire_cache = strtotime('+1 Day');
+
+			// Cache Handler
+			$data = CacheHandler::save(array('method'=>array('NewsGoogleFeed','_RequestData'),
+											 'data'=>$query,
+											 'cache_expire'=>$expire_cache,
+											 'cache_prefix'=>'feed',
+											 'cache_id'=>$query,
+											 'cache_dir'=>$cache_dir,
+											 'format'=>'xml',
+											 //'type_save'=>'database',
+											 //'serialize'=>false
+											 )
+										);
+
+			return $data;
 		}
-		else
+		catch(CacheHandlerException $e)
 		{
-			return $CacheXML;
+			throw new NewsGoogleFeedException($e->getMessage());
 		}
-	}
-
-
-	/**
-	 * Cache data XML
-	 * @param  string query
-	 * @return string
-	 * @throws NewsGoogleFeedException
-	 */
-	private static function _CacheXML($query)
-	{
-		$stored =  BASEDIR.'/'.self::$cacheDir . '/feed.' . md5($query) . '.xml';
-
-		$expire_cache = strtotime('+1 Day');
-
-		// Hapus cache jika melampaui batas expire
-		if( file_exists($stored) AND ( filemtime($stored) < strtotime('now') ) )
-		{
-			unlink($stored);
-		}
-
-		// Buat file cache baru jika file tidak ditemukan di direktori
-		if( !file_exists($stored) )
-		{
-			// Menggunakan _RequestData() untuk mengambil data API
-			$rd = self::_RequestData($query);
-
-			// Jika hasil data API false maka di return null
-			if($rd == false)
-			{
-				$data = null;
-			}
-			else
-			{
-				// Buat file cache & rubah meta time nya
-				@file_put_contents($stored, $rd);
-				touch($stored, $expire_cache);
-
-				// Definisikan nilai $data
-				$data = $rd;
-			}
-		}
-		else
-		{
-			// Nilai data dari lokal file cache
-			$data = @file_get_contents($stored);
-		}
-
-		return $data;
 	}
 
 
@@ -189,7 +154,7 @@ class NewsGoogleFeed
 	 * @return string
 	 * @throws NewsGoogleFeedException
 	 */
-	private static function _RequestData($query)
+	public static function _RequestData($query)
 	{
 		if(method_exists('cURLs','access_curl'))
 		{
@@ -203,7 +168,7 @@ class NewsGoogleFeed
 		}
 		else
 		{
-			return false;
+			return null;
 		}
 	}
 
@@ -225,8 +190,40 @@ class NewsGoogleFeed
 		}
 	}
 
-}
 
+	/**
+	 * Converts a SimpleXMLElement into an array.
+	 * @return array
+	 */
+	private static function NewsXMLtoArray($xml = NULL)
+	{
+		$xml = new SimpleXMLElement($xml);
+	    if($xml === NULL)
+	    {
+	        $xml = $this->xml;
+	    }
+
+	    if(!$xml->children())
+	    {
+	        return (string) $xml;
+	    }
+
+	    $arr = array();
+	    foreach ($xml->children() as $tag => $child)
+	    {
+	        if(count($xml->$tag) === 1)
+	        {
+	            $arr[$tag] = self::NewsXMLtoArray($child);
+	        }
+	        else
+	        {
+	            $arr[$tag][] = self::NewsXMLtoArray($child);
+	        }
+	    }
+
+	    return $arr;
+	}
+}
 
 
 /**

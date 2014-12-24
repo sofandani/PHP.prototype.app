@@ -97,6 +97,7 @@
 }
 .wi-nt_mostlycloudy:before,
 .wi-nt_cloudy:before,
+.wi-mostlycloudy:before,
 .wi-cloudy:before {
   content: "\f013";
 }

@@ -1,4 +1,4 @@
-<?php if ( !defined('BASEPATH')) header('Location:404');
+<?php if ( !defined('BASEPATH')) header('Location:/404');
 /**
  * @author ofanebob
  * @copyright 2014
@@ -25,19 +25,20 @@ class DB_Class {
      * @return database connection handler
      */
     function connect() {
-        
-        $this->_connecting = new mysqli($this->_hosting, $this->_username, $this->_password, $this->_database);
-        
-        if (mysqli_connect_errno()) {
-            die("Koneksi MySQL gagal: " . mysqli_connect_error());
+        try
+        {
+            $this->_connecting = new mysqli($this->_hosting, $this->_username, $this->_password, $this->_database);
+            return $this->_connecting;
         }
-        elseif($this->_connecting->connect_error) {
-            $this->last_error = 'Database tidak tersambung. ' . $_connecting->connect_error;
-            exit();
+        catch(Exception $e)
+        {
+            throw new DBCException($e->getMessage());
         }
-
-        return $this->_connecting;
     }
 }
 
+/**
+ * DBCException extends
+ */
+class DBCException extends Exception{}
 ?>

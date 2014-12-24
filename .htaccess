@@ -1,25 +1,10 @@
 Options All -Indexes
 
-<Files "config.php">
-Order Deny,Allow
-Deny from all
-</Files>
-
-<Files "loader.php">
-Order Deny,Allow
-Deny from all
-</Files>
-
-<Files "metadata.json">
-Order Deny,Allow
-Deny from all
-</Files>
-
-<Files  ~ "\.(json|xml)$">
+<Files  ~ "((lib|loader|config)\.php|(metadata)\.json|\.(json|xml))$">
 Order Deny,Allow
 Deny from all
 #Remove this comment and clear # bellow on Allow from if online server
-#Allow from 192.168.1.5
+Allow from 192.168.1.5
 </Files>
 
 <IfModule mod_rewrite.c>

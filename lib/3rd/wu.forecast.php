@@ -1,4 +1,4 @@
-<?php if ( !defined('BASEPATH')) header('Location:404');
+<?php if ( !defined('BASEPATH')) header('Location:/404');
 /**
  * WuForecast Class
  * Weather & Forecast using API Wunderground Service
@@ -20,20 +20,23 @@ class WuForecast
 	/** @var string */
 	protected $_cache_dir;
 
+	protected $_basepath;
+
 	const ERROR_MSG = 'Something Wrong';
 	const BASE_LANG = 'ID';
 	const BASE_CITY = 'Kuningan';
+	const BASE_API = 'http://api.wunderground.com/api';
 
 	/**
 	 * __construct()
 	 * Definisi variable global dari data parameter
 	 * @param $args
 	 */
-	public function __construct($args)
+	public function __construct()
 	{
-		$this->_args = is_array($args) ? $args : null;
+		$this->_basepath = (defined('BASEPATH') ? BASEPATH : dirname(__FILE__).'/../../');
 
-		$this->_cache_dir = BASEDIR.'/json';
+		$this->_cache_dir = $this->_basepath.'/app/weather/json';
 
 		/** @var Kumpulan API Key */
 		$this->_key_bank = array('d4c777b679398c1f',
@@ -54,108 +57,70 @@ class WuForecast
  	 * @throws WuForecastException on retrive_api()
  	 * @return stdObject convertion from json_decode()
 	 */
-	public function retrive_api()
+	public function retrive_api($args=false)
 	{
-		// Definisikan nilai $data dari _CacheAPI()
-		$data = $this->_CacheAPI();
+		$this->_args = is_array($args) ? $args : null;
 
-		// Jika nilai $data null maka throw dipanggil
-		if($data == null)
+		try
 		{
-			throw new WuForecastException(self::ERROR_MSG);
-		}
-		else
-		{
-			// Jika nilai $data bukan null maka dirbuah ke json_decode()
-			$decode = json_decode($data, true);
+			$cache_dir = isset($args['cache_dir']) ? $args['cache_dir'] : $this->_cache_dir;
+			
+			$type_save = isset($args['type_save']) ? $args['type_save'] : 'database';
 
-			// Jika ditemukan error pada response json_decode maka di return ke teks error
-			if( isset($decode['response']['error']) )
+			$serialize = isset($args['serialize']) ? $args['serialize'] : true;
+
+			$cache_table = isset($args['cache_table']) ? $args['cache_table'] : 'app_cache';
+
+			$city = isset($args['city']) ? $args['city'] : 'Kuningan';
+
+			$expire_cache = isset($args['expire_cache']) ? $args['expire_cache'] : strtotime('+1 Hour');
+
+			$cache = CacheHandler::save(array('method'=>array('WuForecast','_ServiceWeather'),
+											  'data'=>array('key'=>$this->_api_key,'lang'=>'ID','city'=>$city),
+											  'cache_expire'=>$expire_cache,
+											  'cache_prefix'=>'forecast',
+											  'cache_id'=>$city,
+											  'cache_dir'=>$cache_dir,
+											  'type_save'=>$type_save,
+											  'cache_table'=>$cache_table,
+											  'serialize'=>$serialize
+											  )
+										);
+
+
+			$data = is_object($cache) ? $cache : json_decode($cache);
+
+			$error_var = @$data->response->error;
+			$results_var = @$data->response->results;
+
+			if($error_var)
 			{
-				throw new WuForecastException($decode['response']['error']['description']);
+				throw new WuForecastException($error_var->description);
 			}
-			elseif( isset($decode['response']['results']) )
+			elseif($results_var)
 			{
 				throw new WuForecastException(self::ERROR_MSG);
 			}
 			else
 			{
-				// Jika tidak ada error pada response maka data di konversi ke stdObject
-				return ArrayToObject($decode);
+				return $data;
 			}
+		}
+		catch(CacheHandlerException $e)
+		{
+			throw new WuForecastException($e->getMessage());
 		}
 	}
 
-	/**
-	 * _CacheAPI()
-	 * Fungsi proteksi untuk proses pembuatan file cache dalam format json
- 	 * @return JSON file dari file_get_contents
-	 */
-	protected function _CacheAPI()
-	{
-		// Pengaturan untuk cache file
-		$data = $this->_args;
-		$cache_dir = isset($data['cache_dir']) ? $data['cache_dir'] : $this->_cache_dir;
-		$city = isset($data['city']) ? $data['city'] : 'Kuningan';
-		$city = preg_replace('/ /','',$city);
-		$stored = $cache_dir.'/forecast-'.md5($city).'.json';
-		$expire_cache = isset($data['expire_cache']) ? $data['expire_cache'] : strtotime('+1 Hour');
-
-		// Hapus cache jika melampaui batas expire
-		if( file_exists($stored) AND ( filemtime($stored) < strtotime('now') ) )
-		{
-			unlink($stored);
-		}
-
-		// Buat file cache baru jika file tidak ditemukan di direktori
-		if( !file_exists($stored) )
-		{
-			// Menggunakan _ServeiceWeather() untuk mengambil data API
-			$sw = $this->_ServiceWeather();
-
-			// Jika hasil data API false maka di return null
-			if($sw == false)
-			{
-				$data = null;
-			}
-			else
-			{
-				// Buat file cache & rubah meta time nya
-				@file_put_contents($stored, $sw);
-				touch($stored, $expire_cache);
-
-				// Definisikan nilai $data
-				$data = $sw;
-			}
-		}
-		else
-		{
-			// Nilai data dari lokal file cache
-			$data = @file_get_contents($stored);
-		}
-
-		return $data;
-	}
-
-	/**
-	 * _SendToDatabase()
-	 * Fungsi proteksi untuk cache data API ke database
- 	 * @return Access_CRUD()
-	 */
-	protected function _SendToDatabase()
-	{
-		$data = array();
-		return Access_CRUD($data,'create');
-	}
 
 	/**
 	 * _ServiceWeather()
 	 * Fungsi proteksi untuk proses permintaan data menggunakan WUnderground API endpoint
  	 * @return cURLs() retrive data
 	 */
-	protected function _ServiceWeather()
+	public function _ServiceWeather($parm=false)
 	{
-		$data = $this->_args;
+		$data = $parm == false ? $this->_args : $parm;
 
 		if($data == null)
 		{
@@ -165,9 +130,8 @@ class WuForecast
 		{
 		 	if(method_exists('cURLs','access_curl'))
 		 	{
-				$API_KEY = $this->_api_key;
-				$server = 'http://api.wunderground.com/api';
-				$key = isset($data['key']) ? $data['key'] : $API_KEY;
+				$server = self::BASE_API;
+				$key = isset($data['key']) ? $data['key'] : $this->_api_key;
 				$lang = isset($data['lang']) ? $data['lang'] : self::BASE_LANG;
 				$city = isset($data['city']) ? $data['city'] : self::BASE_CITY;
 				$city = preg_replace('/ /','',$city);
@@ -184,6 +148,7 @@ class WuForecast
 		}
 	}
 }
+
 
 /** Define Exception Extends Class */
 class WuForecastException extends Exception{}

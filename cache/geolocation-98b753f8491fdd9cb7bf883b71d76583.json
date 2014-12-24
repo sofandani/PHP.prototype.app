@@ -1,0 +1,108 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "New Delhi",
+               "short_name" : "New Delhi",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Delhi",
+               "short_name" : "DL",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "India",
+               "short_name" : "IN",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "New Delhi, Delhi, India",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 28.889816,
+                  "lng" : 77.3418147
+               },
+               "southwest" : {
+                  "lat" : 28.4010669,
+                  "lng" : 76.8396999
+               }
+            },
+            "location" : {
+               "lat" : 28.6322444,
+               "lng" : 77.2207238
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 28.889816,
+                  "lng" : 77.3418147
+               },
+               "southwest" : {
+                  "lat" : 28.4010669,
+                  "lng" : 76.8396999
+               }
+            }
+         },
+         "partial_match" : true,
+         "types" : [ "locality", "political" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "Delhi",
+               "short_name" : "Delhi",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Rewa",
+               "short_name" : "Rewa",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Madhya Pradesh",
+               "short_name" : "MP",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "India",
+               "short_name" : "IN",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Delhi, Madhya Pradesh, India",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 24.64363,
+                  "lng" : 81.57562
+               },
+               "southwest" : {
+                  "lat" : 24.62512,
+                  "lng" : 81.55244999999999
+               }
+            },
+            "location" : {
+               "lat" : 24.6348014,
+               "lng" : 81.567869
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 24.64363,
+                  "lng" : 81.57562
+               },
+               "southwest" : {
+                  "lat" : 24.62512,
+                  "lng" : 81.55244999999999
+               }
+            }
+         },
+         "partial_match" : true,
+         "types" : [ "locality", "political" ]
+      }
+   ],
+   "status" : "OK"
+}

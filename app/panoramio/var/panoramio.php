@@ -1,4 +1,4 @@
-<?php
+<?php if ( !defined('BASEPATH')) header('Location:/404');
 function var_panoramio_title($city)
 {
 	return 'Panoramio '.ucwords($city);

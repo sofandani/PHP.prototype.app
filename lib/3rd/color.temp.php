@@ -1,4 +1,4 @@
-<?php if ( !defined('BASEPATH')) header('Location:404');
+<?php if ( !defined('BASEPATH')) header('Location:/404');
 
 function convert_color_temp($temp)
 {
@@ -8,19 +8,23 @@ function convert_color_temp($temp)
 	}
 	else
 	{
-		if($temp < 18)
+		if($temp < 11)
 		{
 			$r = "35BFFF";
 		}
-		elseif($temp > 18 AND $temp <= 32)
+		elseif($temp > 11 AND $temp <= 31)
 		{
 			$r = "00BFC6";
 		}
-		elseif($temp > 32 AND $temp <= 64)
+		elseif($temp > 31 AND $temp <= 61)
 		{
 			$r = "F58839";
 		}
-		elseif($temp > 64)
+		elseif($temp > 61 AND $temp <= 91)
+		{
+			$r = "FB006A";
+		}
+		elseif($temp > 91)
 		{
 			$r = "DE0303";
 		}

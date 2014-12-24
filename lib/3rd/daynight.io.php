@@ -1,8 +1,8 @@
-<?php if ( !defined('BASEPATH')) header('Location:404');
+<?php if ( !defined('BASEPATH')) header('Location:/404');
 
 function is_night_day_bool($time='')
 {
-	$default_get_times = empty($time) ? time() : $time;
+	$default_get_times = empty($time) ? strtotime('now') : $time;
 
 	$hourly_local = date("g",$default_get_times);
 

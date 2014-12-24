@@ -1,0 +1,94 @@
+
+{
+  "response": {
+  "version":"0.1",
+  "termsofService":"http://www.wunderground.com/weather/api/d/terms.html",
+  "features": {
+  "conditions": 1
+  }
+	}
+  ,	"current_observation": {
+		"image": {
+		"url":"http://icons.wxug.com/graphics/wu2/logo_130x80.png",
+		"title":"Weather Underground",
+		"link":"http://www.wunderground.com"
+		},
+		"display_location": {
+		"full":"Seoul, Korea Selatan",
+		"city":"Seoul",
+		"state":"",
+		"state_name":"Korea Selatan",
+		"country":"KO",
+		"country_iso3166":"KR",
+		"zip":"00000",
+		"magic":"1",
+		"wmo":"47117",
+		"latitude":"37.50000000",
+		"longitude":"126.93000031",
+		"elevation":"49.00000000"
+		},
+		"observation_location": {
+		"full":"Bucheon3, GYEONGGI",
+		"city":"Bucheon3",
+		"state":"GYEONGGI",
+		"country":"SOUTH KOREA",
+		"country_iso3166":"KR",
+		"latitude":"37.526917",
+		"longitude":"126.825661",
+		"elevation":"115 ft"
+		},
+		"estimated": {
+		},
+		"station_id":"IGYEONGG3",
+		"observation_time":"Last Updated on Desember 23, 1:45 PM KST",
+		"observation_time_rfc822":"Tue, 23 Dec 2014 13:45:29 +0900",
+		"observation_epoch":"1419309929",
+		"local_time_rfc822":"Tue, 23 Dec 2014 13:55:02 +0900",
+		"local_epoch":"1419310502",
+		"local_tz_short":"KST",
+		"local_tz_long":"Asia/Seoul",
+		"local_tz_offset":"+0900",
+		"weather":"Mendung Merata",
+		"temperature_string":"38.2 F (3.4 C)",
+		"temp_f":38.2,
+		"temp_c":3.4,
+		"relative_humidity":"65%",
+		"wind_string":"From the Dari Timur ke Timurlaut at 1.0 MPH Gusting to 5.0 MPH",
+		"wind_dir":"Dari Timur ke Timurlaut",
+		"wind_degrees":74,
+		"wind_mph":1.0,
+		"wind_gust_mph":"5.0",
+		"wind_kph":1.6,
+		"wind_gust_kph":"8.0",
+		"pressure_mb":"1025",
+		"pressure_in":"30.27",
+		"pressure_trend":"-",
+		"dewpoint_string":"27 F (-3 C)",
+		"dewpoint_f":27,
+		"dewpoint_c":-3,
+		"heat_index_string":"NA",
+		"heat_index_f":"NA",
+		"heat_index_c":"NA",
+		"windchill_string":"38 F (3 C)",
+		"windchill_f":"38",
+		"windchill_c":"3",
+		"feelslike_string":"38 F (3 C)",
+		"feelslike_f":"38",
+		"feelslike_c":"3",
+		"visibility_mi":"6.2",
+		"visibility_km":"10.0",
+		"solarradiation":"214",
+		"UV":"0.9","precip_1hr_string":"0.00 in ( 0 mm)",
+		"precip_1hr_in":"0.00",
+		"precip_1hr_metric":" 0",
+		"precip_today_string":"0.00 in (0 mm)",
+		"precip_today_in":"0.00",
+		"precip_today_metric":"0",
+		"icon":"mostlycloudy",
+		"icon_url":"http://icons.wxug.com/i/c/k/mostlycloudy.gif",
+		"forecast_url":"http://www.wunderground.com/global/stations/47117.html",
+		"history_url":"http://www.wunderground.com/weatherstation/WXDailyHistory.asp?ID=IGYEONGG3",
+		"ob_url":"http://www.wunderground.com/cgi-bin/findweather/getForecast?query=37.526917,126.825661",
+		"nowcast":""
+	}
+}

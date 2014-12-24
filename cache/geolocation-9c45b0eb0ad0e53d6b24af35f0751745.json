@@ -1,0 +1,177 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Moscow",
+               "short_name" : "Moscow",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "gorod Moskva",
+               "short_name" : "g. Moskva",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Moscow",
+               "short_name" : "Moscow",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Russia",
+               "short_name" : "RU",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Moscow, Russia",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 56.009657,
+                  "lng" : 37.9456611
+               },
+               "southwest" : {
+                  "lat" : 55.48992699999999,
+                  "lng" : 37.3193288
+               }
+            },
+            "location" : {
+               "lat" : 55.755826,
+               "lng" : 37.6173
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 56.009657,
+                  "lng" : 37.9456611
+               },
+               "southwest" : {
+                  "lat" : 55.48992699999999,
+                  "lng" : 37.3193288
+               }
+            }
+         },
+         "partial_match" : true,
+         "types" : [ "locality", "political" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "Moscow",
+               "short_name" : "Moscow",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Uchalinsky District",
+               "short_name" : "Uchalinsky District",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Republic of Bashkortostan",
+               "short_name" : "Republic of Bashkortostan",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Russia",
+               "short_name" : "RU",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "453747",
+               "short_name" : "453747",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "Moscow, Republic of Bashkortostan, Russia, 453747",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 53.9829752,
+                  "lng" : 59.1049871
+               },
+               "southwest" : {
+                  "lat" : 53.9802787,
+                  "lng" : 59.0965374
+               }
+            },
+            "location" : {
+               "lat" : 53.98225859999999,
+               "lng" : 59.10225149999999
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 53.9829759302915,
+                  "lng" : 59.1049871
+               },
+               "southwest" : {
+                  "lat" : 53.9802779697085,
+                  "lng" : 59.0965374
+               }
+            }
+         },
+         "partial_match" : true,
+         "types" : [ "locality", "political" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "Moscow",
+               "short_name" : "Moscow",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Penovsky District",
+               "short_name" : "Penovsky District",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Tver Oblast",
+               "short_name" : "Tver Oblast",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Russia",
+               "short_name" : "RU",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "172796",
+               "short_name" : "172796",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "Moscow, Tver Oblast, Russia, 172796",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 56.91918399999999,
+                  "lng" : 32.1693879
+               },
+               "southwest" : {
+                  "lat" : 56.914117,
+                  "lng" : 32.1601389
+               }
+            },
+            "location" : {
+               "lat" : 56.918056,
+               "lng" : 32.163611
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 56.91918399999999,
+                  "lng" : 32.1693879
+               },
+               "southwest" : {
+                  "lat" : 56.914117,
+                  "lng" : 32.1601389
+               }
+            }
+         },
+         "partial_match" : true,
+         "types" : [ "locality", "political" ]
+      }
+   ],
+   "status" : "OK"
+}

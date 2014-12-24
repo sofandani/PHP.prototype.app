@@ -4,10 +4,11 @@
 	"require":
 	[
 		"db",
-		"array.convert",
 		"crud",
 		"curl",
 		"readfile",
+		"array.convert",
+		"cache.handler",
 		"html.compress",
 		"html.generator"
 	],
@@ -18,7 +19,7 @@
 			"server":"localhost",
 			"username":"root",
 			"password":"",
-			"table":""
+			"table":"prototype_app"
 		},
 		"host":
 		{

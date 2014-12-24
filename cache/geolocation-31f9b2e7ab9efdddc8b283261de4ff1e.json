@@ -1,0 +1,49 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Shaanxi",
+               "short_name" : "Shaanxi",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "China",
+               "short_name" : "CN",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Shaanxi, China",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 39.5870105,
+                  "lng" : 111.2480544
+               },
+               "southwest" : {
+                  "lat" : 31.7050598,
+                  "lng" : 105.491949
+               }
+            },
+            "location" : {
+               "lat" : 34.265472,
+               "lng" : 108.954239
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 39.5870105,
+                  "lng" : 111.2480544
+               },
+               "southwest" : {
+                  "lat" : 31.7050598,
+                  "lng" : 105.491949
+               }
+            }
+         },
+         "partial_match" : true,
+         "types" : [ "administrative_area_level_1", "political" ]
+      }
+   ],
+   "status" : "OK"
+}

@@ -1,0 +1,91 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Tokyo",
+               "short_name" : "Tokyo",
+               "types" : [ "colloquial_area", "locality", "political" ]
+            },
+            {
+               "long_name" : "Japan",
+               "short_name" : "JP",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Tokyo, Japan",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 35.8175168,
+                  "lng" : 139.9198562
+               },
+               "southwest" : {
+                  "lat" : 35.5208632,
+                  "lng" : 139.5629047
+               }
+            },
+            "location" : {
+               "lat" : 35.7090259,
+               "lng" : 139.7319925
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 35.8175168,
+                  "lng" : 139.9198562
+               },
+               "southwest" : {
+                  "lat" : 35.5208632,
+                  "lng" : 139.5629047
+               }
+            }
+         },
+         "types" : [ "colloquial_area", "locality", "political" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "Tokyo",
+               "short_name" : "Tokyo",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Japan",
+               "short_name" : "JP",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Tokyo, Japan",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 35.8986466,
+                  "lng" : 153.9875216
+               },
+               "southwest" : {
+                  "lat" : 24.2242343,
+                  "lng" : 138.9427579
+               }
+            },
+            "location" : {
+               "lat" : 35.6894875,
+               "lng" : 139.6917064
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 35.817813,
+                  "lng" : 139.910202
+               },
+               "southwest" : {
+                  "lat" : 35.528873,
+                  "lng" : 139.510574
+               }
+            }
+         },
+         "types" : [ "administrative_area_level_1", "political" ]
+      }
+   ],
+   "status" : "OK"
+}

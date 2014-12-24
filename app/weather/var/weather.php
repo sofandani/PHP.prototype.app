@@ -1,4 +1,4 @@
-<?php
+<?php if ( !defined('BASEPATH')) header('Location:/404');
 function var_weather_title($city)
 {
 	return 'Weather '.ucwords($city);
@@ -10,7 +10,7 @@ function var_weather_content($var)
 		<div class="container">
 			<div class="icon-weather">
 				<div class="heading-weather">
-					<span class="forecast-city">'.$var[0].'</span>
+					<span class="forecast-city '.(strlen($var[0]) >= 15 ? 'small':'big').'">'.$var[0].'</span>
 					<span class="forecast-name">'.$var[1].'</span>
 				</div>
 				<div class="body-weather" style="color:#'.convert_color_temp($var[2]).'">
@@ -26,7 +26,7 @@ function var_weather_content($var)
 function var_weather_embed()
 {
 	return GenTag::css(
-				array('style'=>array('href'=>'style.css'),
+				array('style'=>array('href'=>'forecast-style.css'),
 					  'font'=>array('href'=>'weather-icons.css')
 				)
 			);

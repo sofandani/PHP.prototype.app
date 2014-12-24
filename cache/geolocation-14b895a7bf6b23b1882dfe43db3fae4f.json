@@ -1,0 +1,63 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Amazon",
+               "short_name" : "Amazon",
+               "types" : [ "neighborhood", "political" ]
+            },
+            {
+               "long_name" : "Eugene",
+               "short_name" : "Eugene",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Lane County",
+               "short_name" : "Lane County",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Oregon",
+               "short_name" : "OR",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "United States",
+               "short_name" : "US",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Amazon, Eugene, OR, USA",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 44.040346,
+                  "lng" : -123.0588461
+               },
+               "southwest" : {
+                  "lat" : 44.020097,
+                  "lng" : -123.0928982
+               }
+            },
+            "location" : {
+               "lat" : 44.0333642,
+               "lng" : -123.0760561
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 44.040346,
+                  "lng" : -123.0588461
+               },
+               "southwest" : {
+                  "lat" : 44.020097,
+                  "lng" : -123.0928982
+               }
+            }
+         },
+         "types" : [ "neighborhood", "political" ]
+      }
+   ],
+   "status" : "OK"
+}

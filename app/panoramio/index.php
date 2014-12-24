@@ -13,7 +13,8 @@ try
 	$ApiParm = array('img_num'=>100,
 					 'calc_box'=>true,
 					 'start_img'=>0,
-					 'city'=>$city
+					 'city'=>$city,
+					 'typedata'=>'json'
 					 );
 
 	$panoramioClass = new panoramioAPI($ApiParm);

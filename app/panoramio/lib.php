@@ -18,6 +18,6 @@ $libs = array(	'array.convert',
 				'panoramio'
 			);
 
-return loader_3rd($libs);
+return Libs::loader_3rd($libs);
 
 ?>

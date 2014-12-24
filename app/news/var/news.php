@@ -1,4 +1,4 @@
-<?php
+<?php if ( !defined('BASEPATH')) header('Location:/404');
 function var_news_title($city)
 {
 	return 'News '.ucwords($city);

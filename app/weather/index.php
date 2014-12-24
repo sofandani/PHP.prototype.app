@@ -12,20 +12,15 @@ $city = strtolower($city);
 
 try
 {
-	$data = array(	//'key'=>'d4c777b679398c1f',
-					'lang'=>'ID',
+	$data = array(	'lang'=>'ID',
 					'city'=>$city,
+					'expire_cache'=>strtotime('+30 Minute'),
+					'type_save'=>'database',
 					//'forecast'=>true,
-					'expire_cache'=>strtotime('+30 Minute')
+					//'key'=>'d4c777b679398c1f',
 					);
 	
-	$WuForecast = new WuForecast($data);
-	$decode = $WuForecast->retrive_api();
-
-	/*
-	$serialize = serialize($decode);
-	$unserialize = unserialize($serialize);
-	*/
+	$decode = (new WuForecast)->retrive_api($data);
 
 	$api_forecast_icon = $decode->current_observation->icon;
 	$api_forecast_name = $decode->current_observation->weather;

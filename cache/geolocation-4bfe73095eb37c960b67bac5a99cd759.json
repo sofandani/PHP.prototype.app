@@ -1,0 +1,275 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "California",
+               "short_name" : "CA",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "United States",
+               "short_name" : "US",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "California, USA",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 42.0095169,
+                  "lng" : -114.131211
+               },
+               "southwest" : {
+                  "lat" : 32.5342321,
+                  "lng" : -124.4096196
+               }
+            },
+            "location" : {
+               "lat" : 36.778261,
+               "lng" : -119.4179324
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 42.0095169,
+                  "lng" : -114.131211
+               },
+               "southwest" : {
+                  "lat" : 32.5342321,
+                  "lng" : -124.4096196
+               }
+            }
+         },
+         "types" : [ "administrative_area_level_1", "political" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "California",
+               "short_name" : "California",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "8, Bay",
+               "short_name" : "8, Bay",
+               "types" : [ "administrative_area_level_3", "political" ]
+            },
+            {
+               "long_name" : "St. Mary's County",
+               "short_name" : "St Mary's County",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Maryland",
+               "short_name" : "MD",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "United States",
+               "short_name" : "US",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "California, MD, USA",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 38.3422849,
+                  "lng" : -76.4559239
+               },
+               "southwest" : {
+                  "lat" : 38.252645,
+                  "lng" : -76.536582
+               }
+            },
+            "location" : {
+               "lat" : 38.3004029,
+               "lng" : -76.5074542
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 38.3422849,
+                  "lng" : -76.4559239
+               },
+               "southwest" : {
+                  "lat" : 38.252645,
+                  "lng" : -76.536582
+               }
+            }
+         },
+         "types" : [ "locality", "political" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "California",
+               "short_name" : "California",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Washington County",
+               "short_name" : "Washington County",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Pennsylvania",
+               "short_name" : "PA",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "United States",
+               "short_name" : "US",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "California, PA, USA",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 40.1057359,
+                  "lng" : -79.8789209
+               },
+               "southwest" : {
+                  "lat" : 40.025815,
+                  "lng" : -79.946939
+               }
+            },
+            "location" : {
+               "lat" : 40.0656291,
+               "lng" : -79.8917139
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 40.1057359,
+                  "lng" : -79.8789209
+               },
+               "southwest" : {
+                  "lat" : 40.025815,
+                  "lng" : -79.946939
+               }
+            }
+         },
+         "types" : [ "locality", "political" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "California",
+               "short_name" : "California",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Walker",
+               "short_name" : "Walker",
+               "types" : [ "administrative_area_level_3", "political" ]
+            },
+            {
+               "long_name" : "Moniteau County",
+               "short_name" : "Moniteau County",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Missouri",
+               "short_name" : "MO",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "United States",
+               "short_name" : "US",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "65018",
+               "short_name" : "65018",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "California, MO 65018, USA",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 38.6459319,
+                  "lng" : -92.5243321
+               },
+               "southwest" : {
+                  "lat" : 38.6160321,
+                  "lng" : -92.5954749
+               }
+            },
+            "location" : {
+               "lat" : 38.6275278,
+               "lng" : -92.5665786
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 38.6459319,
+                  "lng" : -92.5243321
+               },
+               "southwest" : {
+                  "lat" : 38.6160321,
+                  "lng" : -92.5954749
+               }
+            }
+         },
+         "types" : [ "locality", "political" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "California",
+               "short_name" : "California",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Campbell County",
+               "short_name" : "Campbell County",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Kentucky",
+               "short_name" : "KY",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "United States",
+               "short_name" : "US",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "California, KY, USA",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 38.9293958,
+                  "lng" : -84.25188899999999
+               },
+               "southwest" : {
+                  "lat" : 38.9119789,
+                  "lng" : -84.271456
+               }
+            },
+            "location" : {
+               "lat" : 38.9186766,
+               "lng" : -84.26354719999999
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 38.9293958,
+                  "lng" : -84.25188899999999
+               },
+               "southwest" : {
+                  "lat" : 38.9119789,
+                  "lng" : -84.271456
+               }
+            }
+         },
+         "types" : [ "locality", "political" ]
+      }
+   ],
+   "status" : "OK"
+}

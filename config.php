@@ -1,10 +1,7 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 
-if(!ini_get('date.timezone'))
-{
-	date_default_timezone_set("Asia/Jakarta");
-}
+date_default_timezone_set("Asia/Jakarta");
 
 define('BASEPATH', dirname(__FILE__));
 define('BASENAME', basename(__DIR__));
@@ -27,4 +24,6 @@ $GLOBALS['DEFAULTLIB'] = $defaultlib;
 $siteset = $GLOBALS['METADATA']->setup->host;
 define('PREFIXHOST', $siteset->prefix);
 define('DOMAINFIX', PREFIXHOST.'/'.BASENAME);
+
+require_once(BASEPATH.'/lib/loadlib.php');
 ?>

@@ -1,4 +1,4 @@
-<?php if ( !defined('BASEPATH')) header('Location:404');
+<?php if ( !defined('BASEPATH')) header('Location:/404');
 /**
  * GoogleGeocode Class
  * Geocode converter from city Name via google maps geocode
@@ -10,95 +10,75 @@ class GoogleGeocode
 {
 	protected $_args;
 	protected $_cache_expire;
+	protected $_cache_dir;
 
 	const BASE_CITY = 'Kuningan, Jawa Barat';
 	const CACHE_DIR = 'cache';
 
-	public function __construct($args=false)
+	public function __construct()
+	{
+		$this->_cache_expire = strtotime('+6 Month');
+	}
+
+	public function get_geocode($args=false)
 	{
 		$this->_args = is_array($args) ? $args : null;
-		$this->_cache_expire = strtotime('+1 Month');
-	}
 
-	public function get_geocode()
-	{
-		$gc = $this->_CacheGeocode();
-		if($gc == null)
+		try
 		{
-			throw new GoogleGeocodeException('Failed Retrive Data.');
-		}
-		else
-		{
-			return $gc;
-		}
-	}
+			$city = isset($args['city']) ? $args['city'] : self::BASE_CITY;
+			$city = preg_replace('/ /','',$city);
 
-	protected function _CacheGeocode()
-	{
-		$argums = $this->_args;
-		if($argums == null)
-		{
-			return $argum;
-		}
-		else
-		{
-			$city = isset($argums['city']) ? $argums['city'] : self::BASE_CITY;
-			$basepath = defined('BASEPATH') ? BASEPATH : dirname(__FILE__).'/../';
-			$cache_dir = $basepath.'/'.self::CACHE_DIR;
-			$cache_expire = isset($argums['cache_expire']) ? $argums['cache_expire'] : $this->_cache_expire;
-			$stored = $cache_dir.'/geolocation-'.md5($city).'.json';
+			$cache_dir = isset($args['cache_dir']) ? $args['cache_dir'] : (defined('BASEPATH') ? BASEPATH.'/' : dirname(__FILE__).'/../').self::CACHE_DIR;
+			
+			$expire_cache = isset($args['cache_expire']) ? $args['cache_expire'] : $this->_cache_expire;
 
-			if( file_exists($stored) AND ( filemtime($stored) < strtotime('now') ) )
+			$typedata = isset($args['typedata']) ? $args['typedata'] : 'json';
+
+			// Cache Handler
+			$data = CacheHandler::save(array('method'=>array('GoogleGeocode','_RetrieveGeocode'),
+											 'data'=>array('typedata'=>$typedata,'city'=>$city),
+											 'cache_expire'=>$expire_cache,
+											 'cache_prefix'=>'geolocation',
+											 'cache_id'=>$city,
+											 'cache_dir'=>$cache_dir
+											 )
+										);
+
+			$gc = json_decode($data,true);
+
+			if( isset($gc['status']) AND ($gc['status'] != "OK" OR $gc['status'] == "ERO_RESULTS") )
 			{
-				unlink($stored);
-			}
-
-			if( !file_exists($stored) )
-			{
-				$rc = $this->_RetrieveGeocode();
-
-				if($rc == false)
-				{
-					$data = null;
-				}
-				else
-				{
-					$gc = json_decode($rc,true);
-					if( isset($gc['status']) AND ($gc['status'] != "OK" OR $gc['status'] == "ERO_RESULTS") )
-					{
-						return null;
-					}
-					else
-					{
-						@file_put_contents($stored, $rc);
-						touch($stored, $cache_expire);
-
-						return json_decode($rc);
-					}
-				}
+				throw new GoogleGeocodeException('Failed Retreive Data.');
 			}
 			else
 			{
-				$fgc = @file_get_contents($stored);
-				return json_decode($fgc);
+				return json_decode($data);
 			}
+		}
+		catch(CacheHandlerException $e)
+		{
+			throw new GoogleGeocodeException($e->getMessage());
 		}
 	}
 
-	protected function _RetrieveGeocode()
+
+	public function _RetrieveGeocode($parm=false)
 	{
-		$argums = $this->_args;
-		if($argums == null)
+		$data = $parm == false ? $this->_args : $parm;
+
+		if($data == null)
 		{
-			return $argum;
+			return $data;
 		}
 		else
 		{
 			if(method_exists('cURLs','access_curl'))
 			{
 				$server = 'https://maps.googleapis.com/maps/api/geocode';
-				$city = isset($argums['city']) ? $argums['city'] : self::BASE_CITY;
-				$typedata = isset($argums['typedata']) ? $argums['typedata'] : 'json';
+				$city = isset($data['city']) ? $data['city'] : self::BASE_CITY;
+				$city = preg_replace('/\,/','',$city);
+				$typedata = isset($data['typedata']) ? $data['typedata'] : 'json';
 				$API_ENDPOINT = $server.'/'.$typedata.'?address='.urlencode($city);
 				$cURLs = new cURLs(array('url'=>$API_ENDPOINT,'type'=>'data'));
 				return $cURLs->access_curl();
