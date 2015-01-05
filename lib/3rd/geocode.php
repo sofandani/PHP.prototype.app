@@ -8,21 +8,18 @@
  */
 class GoogleGeocode
 {
-	protected $_args;
-	protected $_cache_expire;
-	protected $_cache_dir;
+	protected static $_args;
+	protected static $_cache_expire;
+	protected static $_cache_dir;
 
 	const BASE_CITY = 'Kuningan, Jawa Barat';
 	const CACHE_DIR = 'cache';
 
-	public function __construct()
+	public static function get_geocode($args=false)
 	{
-		$this->_cache_expire = strtotime('+6 Month');
-	}
+		self::$_args = is_array($args) ? $args : null;
 
-	public function get_geocode($args=false)
-	{
-		$this->_args = is_array($args) ? $args : null;
+		self::$_cache_expire = strtotime('+6 Month');
 
 		try
 		{
@@ -31,41 +28,45 @@ class GoogleGeocode
 
 			$cache_dir = isset($args['cache_dir']) ? $args['cache_dir'] : (defined('BASEPATH') ? BASEPATH.'/' : dirname(__FILE__).'/../').self::CACHE_DIR;
 			
-			$expire_cache = isset($args['cache_expire']) ? $args['cache_expire'] : $this->_cache_expire;
+			$expire_cache = isset($args['cache_expire']) ? $args['cache_expire'] : self::$_cache_expire;
 
 			$typedata = isset($args['typedata']) ? $args['typedata'] : 'json';
 
+			$type_save = isset($args['type_save']) ? $args['type_save'] : 'database';
+
+			$serialize = isset($args['serialize']) ? $args['serialize'] : true;
+
+			$table_cache = isset($args['table_cache']) ? $args['table_cache'] : 'cache';
+
+			$serialize = isset($args['serialize']) ? $args['serialize'] : true;
+
 			// Cache Handler
-			$data = CacheHandler::save(array('method'=>array('GoogleGeocode','_RetrieveGeocode'),
-											 'data'=>array('typedata'=>$typedata,'city'=>$city),
-											 'cache_expire'=>$expire_cache,
-											 'cache_prefix'=>'geolocation',
-											 'cache_id'=>$city,
-											 'cache_dir'=>$cache_dir
-											 )
+			$cache = CacheHandler::save(array('method'=>array('GoogleGeocode','_RetrieveGeocode'),
+											  'data'=>array('typedata'=>$typedata,'city'=>$city),
+											  'cache_expire'=>$expire_cache,
+											  'cache_prefix'=>'geolocation',
+											  'cache_id'=>$city,
+											  'cache_dir'=>$cache_dir,
+											  'type_save'=>$type_save,
+											  'table_cache'=>$table_cache,
+											  'serialize'=>$serialize
+											  )
 										);
 
-			$gc = json_decode($data,true);
+			$data = is_object($cache) ? $cache : json_decode($cache);
 
-			if( isset($gc['status']) AND ($gc['status'] != "OK" OR $gc['status'] == "ERO_RESULTS") )
-			{
-				throw new GoogleGeocodeException('Failed Retreive Data.');
-			}
-			else
-			{
-				return json_decode($data);
-			}
+			return $data;
 		}
 		catch(CacheHandlerException $e)
 		{
-			throw new GoogleGeocodeException($e->getMessage());
+			throw new GoogleGeocodeException($e->getMessage().' from GeoCode');
 		}
 	}
 
 
-	public function _RetrieveGeocode($parm=false)
+	public static function _RetrieveGeocode($parm=false)
 	{
-		$data = $parm == false ? $this->_args : $parm;
+		$data = $parm == false ? self::$_args : $parm;
 
 		if($data == null)
 		{
@@ -81,7 +82,22 @@ class GoogleGeocode
 				$typedata = isset($data['typedata']) ? $data['typedata'] : 'json';
 				$API_ENDPOINT = $server.'/'.$typedata.'?address='.urlencode($city);
 				$cURLs = new cURLs(array('url'=>$API_ENDPOINT,'type'=>'data'));
-				return $cURLs->access_curl();
+				$get = $cURLs->access_curl();
+
+				$decode = json_decode($get,true);
+
+				if( count($decode['results']) > 1 || 
+					isset($decode['status']) && 
+					($decode['status'] != "OK" || 
+					$decode['status'] == "ZERO_RESULTS") 
+					)
+				{
+					return null;
+				}
+				else
+				{
+					return $get;
+				}
 			}
 			else
 			{
@@ -90,6 +106,7 @@ class GoogleGeocode
 		}
 	}
 }
+
 
 /**
  * GoogleGeocodeException extends

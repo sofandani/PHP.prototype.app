@@ -1,41 +1,33 @@
-<?php if ( !defined('BASEPATH')) header('Location:/404');
+<?php if( !defined('BASEPATH')) header('Location:/404');
 
-function is_night_day_bool($time='')
+function is_night_day_bool()
 {
-	$default_get_times = empty($time) ? strtotime('now') : $time;
+	$time = date("h A");
+	$t = explode(" ", $time);
+	$hours = $t[0];
+	$ampm = $t[1];
 
-	$hourly_local = date("g",$default_get_times);
-
-	//Set condition AM or PM times
-	if( date( "A", $default_get_times ) == 'AM' )
+	if($ampm == 'PM')
 	{
-		
-		if ( $hourly_local == 12 || $hourly_local > 5 )
-		{ // Siang
-			return 1;
+		if(in_array($hours, range(01,06)))
+		{
+		    return 1;
 		}
-		elseif ( $hourly_local <= 5 )
-		{ // Malam
+		else
+		{
 			return 0;
 		}
-
-	}
-	elseif( date( "A", $default_get_times ) == 'PM' )
-	{
-		
-		if ( $hourly_local == 12 || $hourly_local > 5 )
-		{ // Malam
-			return 0;
-		}
-		elseif ( $hourly_local <= 5 )
-		{ // Siang
-			return 1;
-		}
-
 	}
 	else
 	{
-		return 1;
+		if(in_array($hours, range(01,06)))
+		{
+			return 0;
+		}
+		else
+		{
+			return 1;
+		}		
 	}
 }
 

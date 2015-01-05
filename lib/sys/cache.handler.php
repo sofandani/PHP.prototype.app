@@ -61,7 +61,7 @@ class CacheHandler
 				$save = self::_CacheToDatabase();
 				break;
 				default:
-				$save = self::_CacheToFile();
+				$save = null;
 			}
 
 			if($save == null)
@@ -79,8 +79,7 @@ class CacheHandler
 	/**
 	 * _CacheToFile()
 	 * Fungsi menangani penyimpanan cache berupa file
- 	 * @throws CacheHandlerException
- 	 * @return $cache
+ 	 * @return $cache OR NULL
 	 */
 	protected static function _CacheToFile()
 	{
@@ -114,7 +113,8 @@ class CacheHandler
 
 				if( ($method==false AND $cache_data==false) ||
 					 method_exists($method[0],$method[1])==false || 
-					 is_callable($method)==false
+					 is_callable($method)==false || 
+					 (is_array($method)==false AND function_exists($method)==false)
 				  )
 				{
 					return null;
@@ -124,7 +124,7 @@ class CacheHandler
 					$cache = call_user_func_array($method, array($cache_data));
 
 					// Jika hasil data API false maka di return null
-					if($cache == false)
+					if($cache == null)
 					{
 						return null;
 					}
@@ -146,10 +146,9 @@ class CacheHandler
 
 
 	/**
-	 * retrive_api()
-	 * Fungsi akses publik setelah semua proses permintaan data
- 	 * @throws WuForecastException on retrive_api()
- 	 * @return stdObject convertion from json_decode()
+	 * _CacheToDatabase()
+	 * Fungsi menangani penyimpanan cache berupa MySQL atau Database
+ 	 * @return $cache OR NULL
 	 */
 	protected static function _CacheToDatabase()
 	{
@@ -170,84 +169,115 @@ class CacheHandler
 			$table_cache = isset($argum['table_cache']) ? $argum['table_cache'] : 'app_cache';
 
 			$cache_name = self::$_cache_name;
+
 			$cache_expire = self::$_cache_expire;
 
 			$prm_read = "WHERE cache_name='{$cache_name}'";
 			$data_read = array('tbl'=>$table_cache,'row'=>'*','prm'=>$prm_read);
 			$sql_read = AccessCRUD($data_read,'read');
-			$sql_array = $sql_read->fetch_array();
 
 			// Cek ketersediaan cache di database
-			if($sql_read->num_rows > 0)
+			if( $sql_read!=false )
 			{
-				if( $sql_array['cache_expire'] < strtotime('now') )
+				if( $sql_read->num_rows > 0 )
+				{
+					$sql_array = $sql_read->fetch_array();
+					
+					if( $sql_array['cache_expire'] < strtotime('now') )
+					{
+						if( ($method==false AND $method_data==false) ||
+							 method_exists($method[0],$method[1])==false || 
+							 is_callable($method)==false || 
+							 (is_array($method)==false AND function_exists($method)==false)
+						  )
+						{
+							return null;
+						}
+						else
+						{
+							$cache_update = call_user_func_array($method, array($method_data));
+
+							if($cache_update == null)
+							{
+								return null;
+							}
+							else
+							{
+								if(is_array($cache_update))
+								{
+									$cache_result = $cache_update;
+								}
+								elseif(is_object($cache_update))
+								{
+									$cache_result = ObjectToArray($cache_update);
+								}
+								else
+								{
+									$cache_result = json_decode($cache_update);
+								}
+
+								$cache_data = ($serialize == true ? serialize($cache_result) : $cache_result);
+
+								$prm_update = array('cache_data'=>$cache_data,'cache_expire'=>$cache_expire);
+
+								$data_update = array('tbl'=>$table_cache,'prm'=>$prm_update,'con'=>$prm_read);
+								
+								AccessCRUD($data_update,'update');
+
+								return $cache_update;
+							}
+						}
+					}
+					else
+					{
+						return ($serialize == true ? unserialize($sql_array['cache_data']) : $sql_array['cache_data']);
+					}
+				}
+				else
 				{
 					if( ($method==false AND $method_data==false) ||
 						 method_exists($method[0],$method[1])==false || 
-						 is_callable($method)==false
+						 is_callable($method)==false || 
+						 (is_array($method)==false AND function_exists($method)==false)
 					  )
 					{
 						return null;
 					}
 					else
 					{
-						$cache = call_user_func_array($method, array($method_data));
+						$cache_create = call_user_func_array($method, array($method_data));
 
-						if($cache == null)
+						// Jika hasil data API false maka di return null
+						if($cache_create == null)
 						{
 							return null;
 						}
 						else
 						{
-							$prm_update = array('cache_data'=>serialize(json_decode($cache)),'cache_expire'=>$cache_expire);
+							if(is_array($cache_create))
+							{
+								$cache_result = $cache_create;
+							}
+							elseif(is_object($cache_create))
+							{
+								$cache_result = ObjectToArray($cache_create);
+							}
+							else
+							{
+								$cache_result = json_decode($cache_create);
+							}
 
-							$data_update = array('tbl'=>$table_cache,'prm'=>$prm_update,'con'=>$prm_read);
-							AccessCRUD($data_update,'update');
+							$cache_data = ($serialize == true ? serialize($cache_result) : $cache_result);
 
-							return $cache;
-						}
-					}
-				}
-				else
-				{
-					return ($serialize == true ? unserialize($sql_array['cache_data']) : $sql_array['cache_data']);
-				}
-			}
-			else
-			{
-				if( ($method==false AND $method_data==false) ||
-					 method_exists($method[0],$method[1])==false || 
-					 is_callable($method)==false
-				  )
-				{
-					return null;
-				}
-				else
-				{
-					$cache = call_user_func_array($method, array($method_data));
+						//var_dump($cache);
 
-					// Jika hasil data API false maka di return null
-					if($cache == null)
-					{
-						return null;
-					}
-					else
-					{
-						$cache_data = ($serialize == true ? serialize(json_decode($cache)) : json_decode($cache));
+							$prm_save = array('cache_name'=>$cache_name,'cache_data'=>$cache_data,'cache_expire'=>$cache_expire);
+							
+							$data_save = array('tbl'=>$table_cache,'prm'=>$prm_save);
+							
+							AccessCRUD($data_save,'create');
 
-						$prm_save = array('cache_name'=>$cache_name,'cache_data'=>$cache_data,'cache_expire'=>$cache_expire);
-						
-						$data_save = array('tbl'=>$table_cache,'prm'=>$prm_save);
-						
-						$sql_save = AccessCRUD($data_save,'create');
-
-						if($sql_save == false)
-						{
-							return null;
-						}
-						else
-						{
-							return $cache;
+							return $cache_create;
 						}
 					}
 				}
@@ -257,14 +287,15 @@ class CacheHandler
 
 
 	/**
-	 * retrive_api()
-	 * Fungsi akses publik setelah semua proses permintaan data
- 	 * @throws WuForecastException on retrive_api()
- 	 * @return stdObject convertion from json_decode()
+	 * drop()
+	 * Fungsi akses publik untuk menghapus data cache
+ 	 * @throws CacheHandlerException
+ 	 * @return $cache
 	 */
 	public static function drop($args=false)
 	{
 		$argum = self::$_args;
+
 		if($argum == null)
 		{
 			throw new CacheHandlerException('Unknown Parameter Cache.');
@@ -281,12 +312,12 @@ class CacheHandler
 				$save = self::_DropCacheDatabase();
 				break;
 				default:
-				$save = self::_DropCacheFile();
+				$save = null;
 			}
 
 			if($save == null)
 			{
-				throw new CacheHandlerException('Failed Drop File Cache.');
+				throw new CacheHandlerException('Failed Drop Cache.');
 			}
 			else
 			{
@@ -297,10 +328,9 @@ class CacheHandler
 
 
 	/**
-	 * retrive_api()
-	 * Fungsi akses publik setelah semua proses permintaan data
- 	 * @throws WuForecastException on retrive_api()
- 	 * @return stdObject convertion from json_decode()
+	 * _DropCacheFile()
+	 * Fungsi menangani penghapusan cache berupa file
+ 	 * @return true OR null
 	 */
 	protected static function _DropCacheFile()
 	{
@@ -322,10 +352,9 @@ class CacheHandler
 
 
 	/**
-	 * retrive_api()
-	 * Fungsi akses publik setelah semua proses permintaan data
- 	 * @throws WuForecastException on retrive_api()
- 	 * @return stdObject convertion from json_decode()
+	 * _DropCacheFile()
+	 * Fungsi menangani penghapusan cache berupa MySQL atau Database
+ 	 * @return true OR null
 	 */
 	protected static function _DropCacheDatabase()
 	{
@@ -351,7 +380,7 @@ class CacheHandler
 			}
 			else
 			{
-				return $drop;
+				return true;
 			}
 		}
 	}

@@ -49,21 +49,34 @@ class NewsGoogleFeed
 	 * @return Feed
 	 * @throws NewsGoogleFeedException
 	 */
-	public static function loadRss($query)
-	{
-		$xml = new SimpleXMLElement(self::_RetrieveXML($query), LIBXML_NOWARNING | LIBXML_NOERROR);
-		
+	public static function loadRss($args=false)
+	{	
+		if(isset($args['type_save']) AND $args['type_save']=='file')
+		{
+			$xml = new SimpleXMLElement(self::_RetrieveXML($args), LIBXML_NOWARNING | LIBXML_NOERROR);
+		}
+		else
+		{
+			$xml = self::_RetrieveXML($args);
+		}
+
 		if(!$xml->channel)
 		{
 			throw new NewsGoogleFeedException('Invalid channel.');
 		}
 
-		self::adjustNamespaces($xml->channel);
+		if(isset($args['type_save']) AND $args['type_save']=='file')
+		{
+			self::adjustNamespaces($xml->channel);
+		}
 
 		foreach ($xml->channel->item as $item)
 		{
 			// converts namespaces to dotted tags
-			self::adjustNamespaces($item);
+			if(isset($args['type_save']) AND $args['type_save']=='file')
+			{
+				self::adjustNamespaces($item);
+			}
 
 			// generate 'timestamp' tag
 			if(isset($item->{'dc:date'}))
@@ -90,9 +103,17 @@ class NewsGoogleFeed
 	 * @return Feed
 	 * @throws NewsGoogleFeedException
 	 */
-	public static function loadAtom($query)
+	public static function loadAtom($args=false)
 	{
-		$xml = new SimpleXMLElement(self::_RetrieveXML($query), LIBXML_NOWARNING | LIBXML_NOERROR);
+		if(isset($args['type_save']) AND $args['type_save']=='file')
+		{
+			$xml = new SimpleXMLElement(self::_RetrieveXML($args), LIBXML_NOWARNING | LIBXML_NOERROR);
+		}
+		else
+		{
+			$xml = self::_RetrieveXML($args);
+		}
+
 		if(!in_array('http://www.w3.org/2005/Atom', $xml->getDocNamespaces(), TRUE))
 		{
 			throw new NewsGoogleFeedException('Invalid channel.');
@@ -116,34 +137,55 @@ class NewsGoogleFeed
 	 * @return string
 	 * @throws NewsGoogleFeedException
 	 */
-	private static function _RetrieveXML($query)
+	private static function _RetrieveXML($args=false)
 	{
-		try
+		if(is_array($args))
 		{
-			$basePath = (defined('BASEPATH') ? BASEPATH : dirname(__FILE__).'/../../');
-			
-			$cache_dir = $basePath.'/app/news/xml';
+			try
+			{
+				$basePath = (defined('BASEPATH') ? BASEPATH : dirname(__FILE__).'/../../');
+				
+				$cache_dir = $basePath.'/app/news/xml';
 
-			$expire_cache = strtotime('+1 Day');
+				$expire_cache = isset($args['expire_cache']) ? $args['expire_cache'] : strtotime('+1 Day');
+				$query = isset($args['query']) ? $args['query'] : 'Kuningan, Jawa Barat';
+				$table_cache = isset($args['table_cache']) ? $args['table_cache'] : 'app_cache';
+				$serialize = isset($args['serialize']) ? $args['serialize'] : true;
+				$type_save = isset($args['type_save']) ? $args['type_save'] : 'database';
 
-			// Cache Handler
-			$data = CacheHandler::save(array('method'=>array('NewsGoogleFeed','_RequestData'),
-											 'data'=>$query,
-											 'cache_expire'=>$expire_cache,
-											 'cache_prefix'=>'feed',
-											 'cache_id'=>$query,
-											 'cache_dir'=>$cache_dir,
-											 'format'=>'xml',
-											 //'type_save'=>'database',
-											 //'serialize'=>false
-											 )
-										);
+				// Cache Handler
+				$param = array('method'=>array( 'NewsGoogleFeed','_RequestData'),
+												'data'=>array('query'=>$query,'type_save'=>$type_save),
+												'cache_expire'=>$expire_cache,
+												'cache_prefix'=>'feed',
+												'cache_id'=>$query,
+												'cache_dir'=>$cache_dir,
+												'format'=>'xml',
+												'type_save'=>$type_save,
+												'table_cache'=>$table_cache,
+												'serialize'=>$serialize
+											  );
 
-			return $data;
+				$cache = CacheHandler::save($param);
+
+				if($type_save=='database')
+				{
+					$data = is_object($cache) ? $cache : ArrayToObject($cache);
+					return $data->rss;
+				}
+				else
+				{
+					return $cache;
+				}
+			}
+			catch(CacheHandlerException $e)
+			{
+				throw new NewsGoogleFeedException($e->getMessage());
+			}
 		}
-		catch(CacheHandlerException $e)
+		else
 		{
-			throw new NewsGoogleFeedException($e->getMessage());
+			throw new NewsGoogleFeedException('Invalid News Paramter.');
 		}
 	}
 
@@ -154,17 +196,38 @@ class NewsGoogleFeed
 	 * @return string
 	 * @throws NewsGoogleFeedException
 	 */
-	public static function _RequestData($query)
+	public static function _RequestData($args=false)
 	{
 		if(method_exists('cURLs','access_curl'))
 		{
+			$query = isset($args['query']) ? $args['query'] : '';
+			$type_save = isset($args['type_save']) ? $args['type_save'] : 'database';
 			$server = 'http://news.google.com/news/section';
-			$query = urlencode($query);
+
+			$query = preg_replace('/(\,)/','',$query);
+			$query = urlencode('"'.$query.'"');
+
 			$BuildURI = $server.'?q='.$query.'&output=rss';
 
-			$data = array('url'=>$BuildURI,'type'=>'data');
-			$cURLs = new cURLs($data);
-			return $cURLs->access_curl();
+			$prm = array('url'=>$BuildURI,'type'=>'data');
+			$cURLs = new cURLs($prm);
+			$data = $cURLs->access_curl();
+			
+			if(preg_match('/N\:/', $data) > 0)
+			{
+				return null;
+			}
+			else
+			{
+				if($type_save=='database')
+				{
+					return XML2Array::createArray($data);
+				}
+				else
+				{
+					return $data;
+				}
+			}
 		}
 		else
 		{
@@ -188,40 +251,6 @@ class NewsGoogleFeed
 				$el->{$prefix . ':' . $tag} = $content;
 			}
 		}
-	}
-
-
-	/**
-	 * Converts a SimpleXMLElement into an array.
-	 * @return array
-	 */
-	private static function NewsXMLtoArray($xml = NULL)
-	{
-		$xml = new SimpleXMLElement($xml);
-	    if($xml === NULL)
-	    {
-	        $xml = $this->xml;
-	    }
-
-	    if(!$xml->children())
-	    {
-	        return (string) $xml;
-	    }
-
-	    $arr = array();
-	    foreach ($xml->children() as $tag => $child)
-	    {
-	        if(count($xml->$tag) === 1)
-	        {
-	            $arr[$tag] = self::NewsXMLtoArray($child);
-	        }
-	        else
-	        {
-	            $arr[$tag][] = self::NewsXMLtoArray($child);
-	        }
-	    }
-
-	    return $arr;
 	}
 }
 

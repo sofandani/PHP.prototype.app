@@ -1,0 +1,43 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Virgo",
+               "short_name" : "Virgo",
+               "types" : []
+            }
+         ],
+         "formatted_address" : "Virgo",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 14.3954258,
+                  "lng" : 47.853012
+               },
+               "southwest" : {
+                  "lat" : -22.9842321,
+                  "lng" : -5.6577015
+               }
+            },
+            "location" : {
+               "lat" : -4.294403099999999,
+               "lng" : 21.0976553
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 14.3954258,
+                  "lng" : 47.853012
+               },
+               "southwest" : {
+                  "lat" : -22.9842321,
+                  "lng" : -5.6577015
+               }
+            }
+         },
+         "types" : []
+      }
+   ],
+   "status" : "OK"
+}

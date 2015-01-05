@@ -1,25 +1,32 @@
 <?php
 
-require_once(dirname(__FILE__).'/../loader.php');
+define('BASEDIR', dirname(__FILE__));
+
+require_once(BASEDIR.'/../loader.php');
+
+$libs = array( 'curl', 'geocode' );
+
+Libs::load3rd($libs);
 
 $city = isset($_GET['city']) ? $_GET['city'] : null;
 
 if($city == null)
 {
-	header('Location:'.$_SERVER['PHP_SELF'].'?city=Tokyo, Japan');
+	header('Location:'.$_SERVER['PHP_SELF'].'?city=Kuningan, Jawa Barat');
 }
 
 try
 {
-	$GoogleGeocode = new GoogleGeocode(array('city'=>$city,'typedata'=>'json'));
-	$get_geocode = $GoogleGeocode->get_geocode();
+	$array = array('city'=>$city,'typedata'=>'json','type_save'=>'file');
+	$GoogleGeocode = GoogleGeocode::get_geocode($array);
+	
+	//print_r( $GoogleGeocode );
 
-	$this->_requiredLatitude = $get_geocode->results[0]->geometry->location->lat;
-	$this->_requiredLongitude = $get_geocode->results[0]->geometry->location->lng;
+	echo $GoogleGeocode->results[0]->geometry->location->lat;
 }
 catch(GoogleGeocodeException $e)
 {
-	throw new PanoramioException($e->getMessage());
+	throw new GoogleGeocodeException($e->getMessage());
 }
 
 ?>

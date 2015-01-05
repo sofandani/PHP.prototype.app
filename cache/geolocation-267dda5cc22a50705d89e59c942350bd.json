@@ -1,0 +1,63 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Jombang",
+               "short_name" : "Jombang",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Jombang",
+               "short_name" : "Jombang",
+               "types" : [ "administrative_area_level_3", "political" ]
+            },
+            {
+               "long_name" : "Jombang",
+               "short_name" : "Jombang",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "East Java",
+               "short_name" : "East Java",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Indonesia",
+               "short_name" : "ID",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Jombang, Jombang, Jombang, East Java, Indonesia",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : -7.507516,
+                  "lng" : 112.2564501
+               },
+               "southwest" : {
+                  "lat" : -7.574988999999999,
+                  "lng" : 112.18019
+               }
+            },
+            "location" : {
+               "lat" : -7.546839499999999,
+               "lng" : 112.2264794
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -7.507516,
+                  "lng" : 112.2564501
+               },
+               "southwest" : {
+                  "lat" : -7.574988999999999,
+                  "lng" : 112.18019
+               }
+            }
+         },
+         "types" : [ "locality", "political" ]
+      }
+   ],
+   "status" : "OK"
+}

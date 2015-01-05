@@ -1,0 +1,58 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Bukittinggi",
+               "short_name" : "Bukittinggi",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Bukittinggi",
+               "short_name" : "Bukittinggi",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "West Sumatra",
+               "short_name" : "West Sumatra",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Indonesia",
+               "short_name" : "ID",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Bukittinggi, Bukittinggi, West Sumatra, Indonesia",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : -0.27269,
+                  "lng" : 100.4056359
+               },
+               "southwest" : {
+                  "lat" : -0.325768,
+                  "lng" : 100.332509
+               }
+            },
+            "location" : {
+               "lat" : -0.305556,
+               "lng" : 100.369167
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -0.27269,
+                  "lng" : 100.4056359
+               },
+               "southwest" : {
+                  "lat" : -0.325768,
+                  "lng" : 100.332509
+               }
+            }
+         },
+         "types" : [ "locality", "political" ]
+      }
+   ],
+   "status" : "OK"
+}

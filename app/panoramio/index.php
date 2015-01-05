@@ -17,8 +17,8 @@ try
 					 'typedata'=>'json'
 					 );
 
-	$panoramioClass = new panoramioAPI($ApiParm);
-	$PanoramioImages = $panoramioClass->getPanoramioImages();
+	//$panoramioClass = new panoramioAPI();
+	$PanoramioImages = panoramioAPI::getPanoramioImages($ApiParm);
 
 	include(BASEDIR.'/var/panoramio.php');
 }

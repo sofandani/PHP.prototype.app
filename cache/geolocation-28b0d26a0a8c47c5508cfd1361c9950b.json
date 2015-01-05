@@ -1,0 +1,64 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Indramayu",
+               "short_name" : "Indramayu",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Indramayu",
+               "short_name" : "Indramayu",
+               "types" : [ "administrative_area_level_3", "political" ]
+            },
+            {
+               "long_name" : "Indramayu",
+               "short_name" : "Indramayu",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "West Java",
+               "short_name" : "West Java",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Indonesia",
+               "short_name" : "ID",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Indramayu, Indramayu, Indramayu, West Java, Indonesia",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : -6.2882399,
+                  "lng" : 108.3760609
+               },
+               "southwest" : {
+                  "lat" : -6.40489,
+                  "lng" : 108.2946899
+               }
+            },
+            "location" : {
+               "lat" : -6.3373735,
+               "lng" : 108.3254741
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -6.2882399,
+                  "lng" : 108.3760609
+               },
+               "southwest" : {
+                  "lat" : -6.40489,
+                  "lng" : 108.2946899
+               }
+            }
+         },
+         "partial_match" : true,
+         "types" : [ "locality", "political" ]
+      }
+   ],
+   "status" : "OK"
+}

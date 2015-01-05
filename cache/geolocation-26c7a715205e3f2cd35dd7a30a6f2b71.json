@@ -1,0 +1,63 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Sragen",
+               "short_name" : "Sragen",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Sragen",
+               "short_name" : "Sragen",
+               "types" : [ "administrative_area_level_3", "political" ]
+            },
+            {
+               "long_name" : "Sragen",
+               "short_name" : "Sragen",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Central Java",
+               "short_name" : "Central Java",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Indonesia",
+               "short_name" : "ID",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Sragen, Sragen, Sragen, Central Java, Indonesia",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : -7.35384,
+                  "lng" : 111.04775
+               },
+               "southwest" : {
+                  "lat" : -7.4440471,
+                  "lng" : 110.991655
+               }
+            },
+            "location" : {
+               "lat" : -7.430090999999999,
+               "lng" : 111.0089286
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -7.35384,
+                  "lng" : 111.04775
+               },
+               "southwest" : {
+                  "lat" : -7.4440471,
+                  "lng" : 110.991655
+               }
+            }
+         },
+         "types" : [ "locality", "political" ]
+      }
+   ],
+   "status" : "OK"
+}

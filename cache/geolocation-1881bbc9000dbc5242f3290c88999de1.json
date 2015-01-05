@@ -1,0 +1,59 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "South Jakarta",
+               "short_name" : "South Jakarta",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "South Jakarta City",
+               "short_name" : "South Jakarta City",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Jakarta",
+               "short_name" : "Jakarta",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Indonesia",
+               "short_name" : "ID",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "South Jakarta, South Jakarta City, Jakarta, Indonesia",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : -6.202699,
+                  "lng" : 106.866844
+               },
+               "southwest" : {
+                  "lat" : -6.3655141,
+                  "lng" : 106.7373149
+               }
+            },
+            "location" : {
+               "lat" : -6.2689913,
+               "lng" : 106.8060388
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -6.202699,
+                  "lng" : 106.866844
+               },
+               "southwest" : {
+                  "lat" : -6.3655141,
+                  "lng" : 106.7373149
+               }
+            }
+         },
+         "partial_match" : true,
+         "types" : [ "locality", "political" ]
+      }
+   ],
+   "status" : "OK"
+}

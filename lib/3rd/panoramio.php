@@ -12,44 +12,43 @@
  class panoramioAPI 
  {
 	// Supplied Cordinates to search near for images
-	protected $_requiredLatitude;
-	protected $_requiredLongitude;	
+	protected static $_requiredLatitude;
+	protected static $_requiredLongitude;
+
+	protected static $_panoramioImageNumber;
+	protected static $_panoramioStartingImage;
 	
 	// The outer limits of the box we would like to search for images within
-	protected $_requiredMinLatitude = 0;
-	protected $_requiredMinLongitude = 0;
-	protected $_requiredMaxLatitude = 0;
-	protected $_requiredMaxLongitude = 0;
+	protected static $_requiredMinLatitude = 0;
+	protected static $_requiredMinLongitude = 0;
+	protected static $_requiredMaxLatitude = 0;
+	protected static $_requiredMaxLongitude = 0;
 	
 	// The distance in kilometers from the position you would like to search for images
-	protected $_locationDistance = 20;
+	protected static $_locationDistance = 20;
 		
 	// The default type of Panoramio image set to retrieve
-	protected $_panoramioSet = 'public';
+	protected static $_panoramioSet = 'public';
 	
 	// The size for the return images
-	protected $_panoramioImageSize = 'medium';
+	protected static $_panoramioImageSize = 'medium';
 	
 	// Ordering style of the images
-	protected $_panoramioOrdering = 'upload_date';
+	protected static $_panoramioOrdering = 'upload_date';
 
 	// Specifics for communication with the actual URL itself
-	protected $_requestUserAgent = 'info@mypanoramiobot.com';
-	protected $_requestHeaders = array('Panoramio-Client-Version: 0.1');
-	protected $_apiUrl = 'http://www.panoramio.com/map/get_panoramas.php';
+	protected static $_requestUserAgent = 'info@mypanoramiobot.com';
+	protected static $_requestHeaders = array('Panoramio-Client-Version: 0.1');
+	protected static $_apiUrl = 'http://www.panoramio.com/map/get_panoramas.php';
 
-	protected $_calculateBox;
-	protected $_cache_dir;
+	protected static $_calculateBox;
+	protected static $_cache_dir;
+
+	protected static $_args;
 
 
-	public function __construct()
+	function __construct()
 	{
-
- 		$this->_calculateBox = isset($args['calc_box']) ? $args['calc_box'] : true;
- 		$this->_panoramioImageNumber = isset($args['img_num']) ? $args['img_num'] : 20;
- 		$this->_panoramioStartingImage = isset($args['start_img']) ? $args['start_img'] : 0;
- 		$this->_cache_dir = 'json';
-
 		if(method_exists('GoogleGeocode','get_geocode') == false)
 			require_once(dirname(__FILE__).'/geocode.php');
 
@@ -68,17 +67,69 @@
 		}
 	}
 
+
+	/**
+	 * Get a set of images from the Panoramio API
+	 * 
+	 * @param int $imageNumber
+	 * @return object 
+	 */	
+	 public static function getPanoramioImages($args=false)
+	 {
+		self::$_args = is_array($args) ? $args : null;
+
+		try
+		{
+			$cache_dir = isset($args['cache_dir']) ? $args['cache_dir'] : self::$_cache_dir;
+			
+			$city = isset($args['city']) ? $args['city'] : 'Kuningan';
+
+			$type_save = isset($args['type_save']) ? $args['type_save'] : 'database';
+
+			$cache_table = isset($args['cache_table']) ? $args['cache_table'] : 'app_cache';
+
+			$serialize = isset($args['serialize']) ? $args['serialize'] : true;
+
+			$basedir = defined('BASEDIR') ? BASEDIR : dirname(__FILE__).'/../app/panoramio/json';
+
+			$typedata = isset($args['typedata']) ? $args['typedata'] : 'json';
+
+			$expire_cache = isset($args['expire_cache']) ? $args['expire_cache'] : strtotime('+1 Hour');
+
+			// Cache Handler
+			$cache = CacheHandler::save(array('method'=>array('panoramioAPI','_processRequest'),
+											  'data'=>$args,
+											  'cache_expire'=>$expire_cache,
+											  'cache_prefix'=>'panoramio',
+											  'cache_id'=>$city,
+											  'cache_dir'=>$cache_dir,
+											  'type_save'=>$type_save,
+											  'cache_table'=>$cache_table,
+											  'serialize'=>$serialize
+											  )
+										);
+
+			$data = is_object($cache) ? $cache : json_decode($cache);
+			return $data;
+		}
+		catch(CacheHandlerException $e)
+		{
+			throw new PanoramioException($e->getMessage().' from Panoramio');
+		}
+	 }
+
+
 	/**
 	 * Set the location via longitude and latitude of where you would like to get images near
 	 * 
 	 * @param string $placeLatitude
 	 * @param string $placeLongitude
 	 */
-	public function setRequiredLocation($placeLatitude, $placeLongitude,$locationDistance)
+	public static function setRequiredLocation($placeLatitude, $placeLongitude,$locationDistance)
 	{
-		$this->_requiredLatitude = $placeLatitude;
-		$this->_requiredLongitude = $placeLongitude;
-		$this->_locationDistance = $locationDistance;
+		self::$_requiredLatitude = $placeLatitude;
+		self::$_requiredLongitude = $placeLongitude;
+		self::$_locationDistance = $locationDistance;
 	}
 
 
@@ -90,25 +141,13 @@
 	* @param string $requiredMinLongitude
 	* @param string $requiredMaxLongitude
 	*/
-	public function setBoxLocation($requiredMinLatitude, $requiredMaxLatitude, $requiredMinLongitude, $requiredMaxLongitude)
+	public static function setBoxLocation($requiredMinLatitude, $requiredMaxLatitude, $requiredMinLongitude, $requiredMaxLongitude)
 	{
 		// The outer limits of the box we would like to search for images within
-		$this->_requiredMinLatitude = $requiredMinLatitude;
-		$this->_requiredMaxLatitude = $requiredMaxLatitude;
-		$this->_requiredMinLongitude = $requiredMinLongitude;
-		$this->_requiredMaxLongitude = $requiredMaxLongitude;
-	}
-
-
-	/**
-	 * Set the ordering of images returned from Pamoramio, class default is upload_date but 
-	 * can also be set to "popularity"
-	 * 
-	 * @param string $imageOrder
-	 */
-	public function orderImages($imageOrder) 
-	{
-		$this->_panoramioOrdering = $imageOrder;
+		self::$_requiredMinLatitude = $requiredMinLatitude;
+		self::$_requiredMaxLatitude = $requiredMaxLatitude;
+		self::$_requiredMinLongitude = $requiredMinLongitude;
+		self::$_requiredMaxLongitude = $requiredMaxLongitude;
 	}
 
 	
@@ -121,9 +160,9 @@
 	 * 
 	 * @param string $panoramioSet
 	 */
-	public function setPanoramioSet($panoramioSet)
+	public static function setPanoramioSet($panoramioSet)
 	{
-		$this->_panoramioSet = $panoramioSet;	
+		self::$_panoramioSet = $panoramioSet;	
 	}
 
 	
@@ -139,126 +178,24 @@
 	 * 
 	 * @param string $panoramioSize
 	 */	
-	 public function setPanoramioSize($panoramioSize)
+	 public static function setPanoramioSize($panoramioSize)
 	 {
-	 	$this->_panoramioImageSize = $panoramioSize;
+	 	self::$_panoramioImageSize = $panoramioSize;
 	 }
 
 	
-	/**
-	 * Get a set of images from the Panoramio API
-	 * 
-	 * @param int $imageNumber
-	 * @return object 
-	 */	
-	 public function getPanoramioImages($args=false)
-	 {
-		$this->_args = is_array($args) ? $args : null;
-
-	 	$calculateBox = $this->_calculateBox;
-		if($calculateBox)
-		{
-			$this->_calculateBoundingBox();
-		}
-
-		try
-		{
-			$cache_dir = isset($args['cache_dir']) ? $args['cache_dir'] : $this->_cache_dir;
-			
-			$city = isset($args['city']) ? $args['city'] : 'Kuningan';
-
-			$basedir = defined('BASEDIR') ? BASEDIR : dirname(__FILE__).'/../app/panoramio/json';
-
-			$expire_cache = isset($args['expire_cache']) ? $args['expire_cache'] : strtotime('+1 Hour');
-
-			// Cache Handler
-			$data = CacheHandler::save(array('method'=>array('GoogleGeocode','_processRequest'),
-											 'data'=>array('typedata'=>$typedata,'city'=>$city),
-											 'cache_expire'=>$expire_cache,
-											 'cache_prefix'=>'geolocation',
-											 'cache_id'=>$city,
-											 'cache_dir'=>$cache_dir,
-											 'type_save'=>$type_save,
-											 'cache_table'=>$cache_table,
-											 'serialize'=>$serialize
-											 )
-										);
-
-			return json_decode($data);
-		
-		}
-		catch(CacheHandlerException $e)
-		{
-			throw new PanoramioException($e->getMessage());
-		}
-	 }
-
-
-	/**
-	 * _CacheAPI()
-	 * Fungsi proteksi untuk proses pembuatan file cache dalam format json
- 	 * @return JSON file dari file_get_contents
-	 */
-	protected function _CacheAPI()
-	{
-		// Pengaturan untuk cache file
-		$data = $this->_args;
-		$cache_dir = isset($data['cache_dir']) ? $data['cache_dir'] : $this->_cache_dir;
-		$city = isset($data['city']) ? $data['city'] : 'Kuningan';
-
-		$basedir = defined('BASEDIR') ? BASEDIR : dirname(__FILE__).'/../app/panoramio/json';
-
-		$stored = $basedir.'/'.$cache_dir.'/panoramio-'.md5($city).'.json';
-		$expire_cache = isset($data['expire_cache']) ? $data['expire_cache'] : strtotime('+1 Hour');
-
-		// Hapus cache jika melampaui batas expire
-		if( file_exists($stored) AND ( filemtime($stored) < strtotime('now') ) )
-		{
-			unlink($stored);
-		}
-
-		// Buat file cache baru jika file tidak ditemukan di direktori
-		if( !file_exists($stored) )
-		{
-			// Menggunakan _ServeiceWeather() untuk mengambil data API
-			$pr = $this->_processRequest();
-
-			// Jika hasil data API false maka di return null
-			if($pr == false)
-			{
-				return null;
-			}
-			else
-			{
-				// Buat file cache & rubah meta time nya
-				@file_put_contents($stored, $pr);
-				touch($stored, $expire_cache);
-
-				// Definisikan nilai $data
-				return $pr;
-			}
-		}
-		else
-		{
-			// Nilai data dari lokal file cache
-			$data = @file_get_contents($stored);
-			return $data;
-		}
-	}
-
-
 	/** 
 	 * Calculate the bounding box for a location via its latitude, longitude
 	 */
-	 protected function _calculateBoundingBox()
+	 protected static function _calculateBoundingBox($lat,$long)
 	 {
-		$minLocation = $this->_calculateNewPosition($this->_requiredLatitude, $this->_requiredLongitude, 225);
-		$this->_requiredMinLatitude = $minLocation['latitude'];
-		$this->_requiredMinLongitude = $minLocation['longitude'];
+		$minLocation = self::_calculateNewPosition($lat,$long, 225);
+		self::$_requiredMinLatitude = $minLocation['latitude'];
+		self::$_requiredMinLongitude = $minLocation['longitude'];
 		 
-		$maxLocation = $this->_calculateNewPosition($this->_requiredLatitude, $this->_requiredLongitude, 45);
-		$this->_requiredMaxLatitude = $maxLocation['latitude'];
-		$this->_requiredMaxLongitude = $maxLocation['longitude'];
+		$maxLocation = self::_calculateNewPosition($lat,$long, 45);
+		self::$_requiredMaxLatitude = $maxLocation['latitude'];
+		self::$_requiredMaxLongitude = $maxLocation['longitude'];
 	 }
 
 	 
@@ -271,12 +208,12 @@
 	  * 
 	  * @return array $newLocation
 	  */
-	 protected function _calculateNewPosition($placeLatitude, $placeLongitude, $directionBearing)
+	 protected static function _calculateNewPosition($placeLatitude, $placeLongitude, $directionBearing)
 	 {
 	 	$earthRadius = 6371; // Radius of the earth in kilometers
 		$newLocation = array();
-		$newLocation['latitude'] = rad2deg(asin(sin(deg2rad($placeLatitude)) * cos($this->_locationDistance / $earthRadius) + cos(deg2rad($placeLatitude)) * sin($this->_locationDistance / $earthRadius) * cos(deg2rad($directionBearing))));
-		$newLocation['longitude'] = rad2deg(deg2rad($placeLongitude) + atan2(sin(deg2rad($directionBearing)) * sin($this->_locationDistance / $earthRadius) * cos(deg2rad($placeLatitude)), cos($this->_locationDistance / $earthRadius) - sin(deg2rad($placeLatitude)) * sin(deg2rad($newLocation['latitude']))));	 
+		$newLocation['latitude'] = rad2deg(asin(sin(deg2rad($placeLatitude)) * cos(self::$_locationDistance / $earthRadius) + cos(deg2rad($placeLatitude)) * sin(self::$_locationDistance / $earthRadius) * cos(deg2rad($directionBearing))));
+		$newLocation['longitude'] = rad2deg(deg2rad($placeLongitude) + atan2(sin(deg2rad($directionBearing)) * sin(self::$_locationDistance / $earthRadius) * cos(deg2rad($placeLatitude)), cos(self::$_locationDistance / $earthRadius) - sin(deg2rad($placeLatitude)) * sin(deg2rad($newLocation['latitude']))));	 
 		
 		return 	$newLocation;
 	 }
@@ -287,14 +224,14 @@
 	  * 
 	  * @return string $APIendpoint
 	  */
-	  protected function _APIendpoint()
+	  protected static function _APIendpoint()
 	  {
-		$APIendpoint = $this->_apiUrl . '?set=' . $this->_panoramioSet .
-						'&from=' . $this->_panoramioStartingImage .
-						'&to=' . ($this->_panoramioStartingImage + $this->_panoramioImageNumber) .
-						'&minx=' . $this->_requiredMinLongitude  . '&miny=' . $this->_requiredMinLatitude. 
-						'&maxx=' . $this->_requiredMaxLongitude . '&maxy=' . $this->_requiredMaxLatitude . 
-						'&size=' . $this->_panoramioImageSize . '&order=' . $this->_panoramioOrdering;
+		$APIendpoint = self::$_apiUrl . '?set=' . self::$_panoramioSet .
+						'&from=' . self::$_panoramioStartingImage .
+						'&to=' . (self::$_panoramioStartingImage + self::$_panoramioImageNumber) .
+						'&minx=' . self::$_requiredMinLongitude  . '&miny=' . self::$_requiredMinLatitude. 
+						'&maxx=' . self::$_requiredMaxLongitude . '&maxy=' . self::$_requiredMaxLatitude . 
+						'&size=' . self::$_panoramioImageSize . '&order=' . self::$_panoramioOrdering;
 		
 		return $APIendpoint;
 	  }
@@ -306,25 +243,39 @@
 	  * @param string $apiData
 	  * @return array $apiResponse
 	  */
-	 public function _processRequest()
+	 public static function _processRequest($args=false)
 	 {
+ 		self::$_calculateBox = isset($args['calc_box']) ? $args['calc_box'] : true;
+ 		self::$_panoramioImageNumber = isset($args['img_num']) ? $args['img_num'] : 20;
+ 		self::$_panoramioStartingImage = isset($args['start_img']) ? $args['start_img'] : 0;
+ 		self::$_requiredLatitude = isset($args['lat']) ? $args['lat'] : 0;
+ 		self::$_requiredLongitude = isset($args['long']) ? $args['long'] : 0;
+
+		if(self::$_calculateBox == true)
+		{
+			self::_calculateBoundingBox($lat,$long);
+		}
+
 	 	if(method_exists('cURLs','access_curl'))
 	 	{
-			$APIendpoint = $this->_APIendpoint();
+			$APIendpoint = self::_APIendpoint();
 
 			$cURLs = new cURLs(array('url'=>$APIendpoint,'type'=>'data'));
-			$r = $cURLs->access_curl();
-			
-			if( $r == false )
+			$get = $cURLs->access_curl();
+
+			$decode = json_decode($get,true);
+
+			if(isset($decode['photos']) AND count($decode['photos']) > 0)
 			{
-				return null;
+				return $get;
 			}
 			else
 			{
-				return $r;
+				return null;
 			}
 		}
-		else{
+		else
+		{
 			return null;
 		}	
 	 }

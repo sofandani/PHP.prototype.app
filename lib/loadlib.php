@@ -1,4 +1,4 @@
-<?php if ( !defined('BASEPATH')) header('Location:404');
+<?php if ( !defined('BASEPATH')) header('Location:/404');
 /**
  * Libs Class
  * Library function, class & method loader
@@ -7,7 +7,7 @@
  */
 class Libs
 {
-	public static function loader_3rd($data)
+	public static function load3rd($data)
 	{
 		return self::load($data,'3rd');
 	}

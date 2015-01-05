@@ -10,20 +10,26 @@ define('PUBLICPATH', BASEPATH.'/public');
 define('TEMPLATEPATH', PUBLICPATH.'/template');
 define('TEMPLATEHTML', TEMPLATEPATH.'/html.php');
 
-$GLOBALS['METADATA'] = json_decode(@file_get_contents(BASEPATH.'/metadata.json'));
+$metadata = BASEPATH.'/metadata.json';
 
-$dbconfig = $GLOBALS['METADATA']->setup->db;
-define('DB_HOST', $dbconfig->server);
-define('DB_USERNAME', $dbconfig->username);
-define('DB_PASSWORD', $dbconfig->password);
-define('DB_NAME', $dbconfig->table);
+if(file_exists($metadata))
+{
+	$GLOBALS['METADATA'] = json_decode(@file_get_contents($metadata));
+}
 
-$defaultlib = $GLOBALS['METADATA']->require;
-$GLOBALS['DEFAULTLIB'] = $defaultlib;
+if(isset($GLOBALS['METADATA']))
+{
+	$defaultlib = $GLOBALS['METADATA']->require;
+	$GLOBALS['DEFAULTLIB'] = $defaultlib;
 
-$siteset = $GLOBALS['METADATA']->setup->host;
-define('PREFIXHOST', $siteset->prefix);
-define('DOMAINFIX', PREFIXHOST.'/'.BASENAME);
+	$siteset = $GLOBALS['METADATA']->setup->host;
+	define('PREFIXHOST', $siteset->prefix);
+	define('DOMAINFIX', PREFIXHOST.'/'.BASENAME);
 
-require_once(BASEPATH.'/lib/loadlib.php');
+	require_once(BASEPATH.'/lib/loadlib.php');
+}
+else
+{
+	exit('Metadata invalid.');
+}
 ?>

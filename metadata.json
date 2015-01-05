@@ -8,9 +8,12 @@
 		"curl",
 		"readfile",
 		"array.convert",
+		"xml.converter",
+		"xml.array",
 		"cache.handler",
 		"html.compress",
-		"html.generator"
+		"html.generator",
+		"exception.handler"
 	],
 	"setup":
 	{

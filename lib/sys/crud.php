@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEDIR')) header('Location:page=error&msg=404');
+<?php if ( ! defined('BASEPATH')) header('Location:/404');
 /**
  * Class Crud_Service
  *

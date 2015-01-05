@@ -10,7 +10,13 @@ if($city == null)
 
 try
 {
-	$rss = NewsGoogleFeed::loadRss('"'.$city.'"');
+	$param =  array('query'=>$city,
+					'type_save'=>'database',
+					'serialize'=>true,
+					'table_cache'=>'app_cache'
+					);
+
+	$rss = NewsGoogleFeed::loadRss($param);
 
 	include(BASEDIR.'/var/news.php');
 	include(TEMPLATEHTML);

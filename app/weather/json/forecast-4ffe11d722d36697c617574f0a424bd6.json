@@ -1,0 +1,94 @@
+
+{
+  "response": {
+  "version":"0.1",
+  "termsofService":"http://www.wunderground.com/weather/api/d/terms.html",
+  "features": {
+  "conditions": 1
+  }
+	}
+  ,	"current_observation": {
+		"image": {
+		"url":"http://icons.wxug.com/graphics/wu2/logo_130x80.png",
+		"title":"Weather Underground",
+		"link":"http://www.wunderground.com"
+		},
+		"display_location": {
+		"full":"Sidoarjo, Indonesia",
+		"city":"Sidoarjo",
+		"state":"",
+		"state_name":"Indonesia",
+		"country":"ID",
+		"country_iso3166":"ID",
+		"zip":"00000",
+		"magic":"11",
+		"wmo":"96935",
+		"latitude":"-7.45388889",
+		"longitude":"112.72027588",
+		"elevation":"4.00000000"
+		},
+		"observation_location": {
+		"full":"Juanda, ",
+		"city":"Juanda",
+		"state":"",
+		"country":"ID",
+		"country_iso3166":"ID",
+		"latitude":"-7.37983084",
+		"longitude":"112.78685760",
+		"elevation":"10 ft"
+		},
+		"estimated": {
+		},
+		"station_id":"WARR",
+		"observation_time":"Last Updated on Desember 26, 3:30 PM WIB",
+		"observation_time_rfc822":"Fri, 26 Dec 2014 15:30:00 +0700",
+		"observation_epoch":"1419582600",
+		"local_time_rfc822":"Fri, 26 Dec 2014 17:06:06 +0800",
+		"local_epoch":"1419584766",
+		"local_tz_short":"WITA",
+		"local_tz_long":"Asia/Makassar",
+		"local_tz_offset":"+0800",
+		"weather":"Agak Disertai Petir",
+		"temperature_string":"82 F (28 C)",
+		"temp_f":82,
+		"temp_c":28,
+		"relative_humidity":"74%",
+		"wind_string":"From the SW at 9 MPH",
+		"wind_dir":"SW",
+		"wind_degrees":230,
+		"wind_mph":9,
+		"wind_gust_mph":0,
+		"wind_kph":15,
+		"wind_gust_kph":0,
+		"pressure_mb":"1004",
+		"pressure_in":"29.65",
+		"pressure_trend":"0",
+		"dewpoint_string":"73 F (23 C)",
+		"dewpoint_f":73,
+		"dewpoint_c":23,
+		"heat_index_string":"88 F (31 C)",
+		"heat_index_f":88,
+		"heat_index_c":31,
+		"windchill_string":"NA",
+		"windchill_f":"NA",
+		"windchill_c":"NA",
+		"feelslike_string":"88 F (31 C)",
+		"feelslike_f":"88",
+		"feelslike_c":"31",
+		"visibility_mi":"4.3",
+		"visibility_km":"7.0",
+		"solarradiation":"--",
+		"UV":"3","precip_1hr_string":"-9999.00 in (-9999.00 mm)",
+		"precip_1hr_in":"-9999.00",
+		"precip_1hr_metric":"--",
+		"precip_today_string":"0.00 in (0.0 mm)",
+		"precip_today_in":"0.00",
+		"precip_today_metric":"0.0",
+		"icon":"tstorms",
+		"icon_url":"http://icons.wxug.com/i/c/k/tstorms.gif",
+		"forecast_url":"http://www.wunderground.com/global/stations/96935.html",
+		"history_url":"http://www.wunderground.com/history/airport/WARR/2014/12/26/DailyHistory.html",
+		"ob_url":"http://www.wunderground.com/cgi-bin/findweather/getForecast?query=-7.37983084,112.78685760",
+		"nowcast":""
+	}
+}

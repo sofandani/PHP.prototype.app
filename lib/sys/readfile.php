@@ -12,10 +12,10 @@
  */
 class StupidReadFile
 {
-	protected $_dirname;
-	protected $_typefile;
-	protected $_matchname;
-	protected $_arraydata;
+	protected static $_dirname;
+	protected static $_typefile;
+	protected static $_matchname;
+	protected static $_arraydata;
 
 	function __construct($args=false)
 	{
@@ -25,6 +25,11 @@ class StupidReadFile
 		$this->_matchname = isset($argum['matchname']) ? $argum['matchname'] : null;
 	}
 
+
+	/**
+	 * ofanebob_read_files static function
+	 * @return $array
+	 */
 	public static function ofanebob_read_files($dir,$typefile,$matchname='')
 	{
 		if($this->_dirname == null)
@@ -60,6 +65,7 @@ class StupidReadFile
 		}
 	}
 }
+
 
 /**
  * StupidReadingFileException extends

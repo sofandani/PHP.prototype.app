@@ -20,7 +20,7 @@ try
 					//'key'=>'d4c777b679398c1f',
 					);
 	
-	$decode = (new WuForecast)->retrive_api($data);
+	$decode = WuForecast::retrive_api($data);
 
 	$api_forecast_icon = $decode->current_observation->icon;
 	$api_forecast_name = $decode->current_observation->weather;

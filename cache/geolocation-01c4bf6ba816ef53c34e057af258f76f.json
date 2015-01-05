@@ -1,0 +1,58 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Semarang",
+               "short_name" : "Semarang",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Semarang City",
+               "short_name" : "Semarang City",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Central Java",
+               "short_name" : "Central Java",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Indonesia",
+               "short_name" : "ID",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Semarang, Semarang City, Central Java, Indonesia",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : -6.931527999999999,
+                  "lng" : 110.505358
+               },
+               "southwest" : {
+                  "lat" : -7.114579999999999,
+                  "lng" : 110.269127
+               }
+            },
+            "location" : {
+               "lat" : -6.966667,
+               "lng" : 110.416667
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -6.931527999999999,
+                  "lng" : 110.505358
+               },
+               "southwest" : {
+                  "lat" : -7.114579999999999,
+                  "lng" : 110.269127
+               }
+            }
+         },
+         "types" : [ "locality", "political" ]
+      }
+   ],
+   "status" : "OK"
+}

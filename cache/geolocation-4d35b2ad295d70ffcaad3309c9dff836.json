@@ -1,0 +1,58 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Banjarnegara",
+               "short_name" : "Banjarnegara",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Banjarnegara",
+               "short_name" : "Banjarnegara",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Central Java",
+               "short_name" : "Central Java",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Indonesia",
+               "short_name" : "ID",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Banjarnegara, Banjarnegara, Central Java, Indonesia",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : -7.171163999999999,
+                  "lng" : 109.917725
+               },
+               "southwest" : {
+                  "lat" : -7.54075,
+                  "lng" : 109.36142
+               }
+            },
+            "location" : {
+               "lat" : -7.379436800000001,
+               "lng" : 109.6163185
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -7.171163999999999,
+                  "lng" : 109.917725
+               },
+               "southwest" : {
+                  "lat" : -7.54075,
+                  "lng" : 109.36142
+               }
+            }
+         },
+         "types" : [ "locality", "political" ]
+      }
+   ],
+   "status" : "OK"
+}
