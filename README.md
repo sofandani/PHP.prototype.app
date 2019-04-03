@@ -1,19 +1,16 @@
-PHP.prototype.app
-=================
+## PHP.prototype.app
 
-Eksperimen aplikasi web menggunakan PHP bentuk contoh/protoype<br />
+### Eksperimen aplikasi web menggunakan PHP bentuk contoh/protoype<br />
 
-<h3>Sampel aplikasi termasuk:</h3>
+#### Sampel aplikasi termasuk:
 - Weather (with Wunderground API)
 - News (with Google News API)
 - Panoramio (with Panoramio API)
 - Foursquare (with Foursquare API)
 - Google Maps (with Google Maps API)
-- <strike>Waze (with Waze API)</strike>
-<br />
+- ~Waze (with Waze API)~
 
-<h3>Keterangan:</h3>
+#### Keterangan:
 - Semua aplikasi menggunakan sumber data dari vendor (pihak ketiga) dalam bentuk API request
 - Beberapa data API di simpan di lokal server/storage menggunakan metode cache tiemout/expire
 - Beberapa vendor premium dibuat random API key untuk mengatasi limit request
-<br />
